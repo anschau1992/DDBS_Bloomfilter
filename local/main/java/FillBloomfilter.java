@@ -9,7 +9,7 @@ public class FillBloomfilter {
 
     public static void main(String args[]) {
 
-        int capacity = 16;
+        int capacity = 4;
         ModuloHashFunction moduloHashFunction = new ModuloHashFunction();
         SecondModuleHashFunction secondModuleHashFunction = new SecondModuleHashFunction();
         HashFunction [] hashFunctions = new HashFunction[2];
@@ -19,12 +19,17 @@ public class FillBloomfilter {
 
         BloomFilter bloomFilter = new BloomFilter(capacity, hashFunctions);
 
-        bloomFilter.add(10);
-        bloomFilter.add(26);
-        bloomFilter.add(42);
-        bloomFilter.add(58);
-        bloomFilter.add(16);
-        bloomFilter.add(12);
+        bloomFilter.add2(2);
+        bloomFilter.add2(6);
+        bloomFilter.add2(18);
+
         bloomFilter.displayHashTable();
+
+        BloomFilter bloom2 = new BloomFilter(capacity, hashFunctions);
+
+        bloom2.add(2);
+        bloom2.add(6);
+        bloom2.add(18);
+        bloom2.displayHashTable();
     }
 }

@@ -29,6 +29,28 @@ public class BloomFilter {
         bitSet.set(hashLocation);
     }
 
+    public void add2(int value) {
+        int hashLocation = 0;
+        int functionsNumb = hashFunctions.length;
+
+        for(int i = 0; i < functionsNumb; i++) {
+            hashLocation = (hashLocation + hashFunctions[i].hash(value, capacity)) % capacity;
+
+            //if location in bitSet is free
+            if(!bitSet.get(hashLocation)) {
+                break;
+            }
+        }
+
+        // step over with last hashfunction, until empty slot is found
+        // if empty slot is already found over, while condition will just be skipped
+        while (bitSet.get(hashLocation)) {
+            hashLocation = (hashLocation + hashFunctions[functionsNumb-1].hash(value, capacity)) % capacity;
+        }
+
+        bitSet.set(hashLocation);
+    }
+
     public void displayHashTable() {
 
         System.out.println("Hash Table: ");
