@@ -1,4 +1,4 @@
-/**
+package BloomFilter; /**
  * Created by Andy on 31.10.16.
  */
 
@@ -15,6 +15,13 @@ public class BloomFilter {
     final HashFunction baseFunction1;
     final HashFunction baseFunction2;
 
+    /**
+     * Initialize the Bloomfilter
+     * @param slotCapacity - the length of the bloom filter
+     * @param numberOfBloomFunctions - the number of function used to hash a value
+     * @param baseFunction1 - base function 1  to build up the final bloom functions
+     * @param baseFunction2 - base function 2  to build up the final bloom functions
+     */
     public BloomFilter(int slotCapacity, int numberOfBloomFunctions, HashFunction baseFunction1, HashFunction baseFunction2) {
         bitSet = new BitSet(slotCapacity);
         this.baseFunction1 = baseFunction1;
@@ -51,20 +58,44 @@ public class BloomFilter {
         return true;
     }
 
-    //hash i (x,m) = hash a (x) + i * hash b (x) % m
-
     /**
      * Based on the base function 1 & 2 and the iteration number,
-     * calculating the position within the bloomfilter.
+     * calculating the position within the bloomfilter based on the function:
+     * hash i (x,m) = hash a (x) + (i+1) * hash b (x) % m
+     *
      * @param value
      * @param functionNumber
      * @return
      */
     private int bloomFunction(int value, int functionNumber) {
-        return (baseFunction1.hash(value, slotCapacity) + functionNumber * baseFunction2.hash(value, slotCapacity)) % slotCapacity;
+        return (baseFunction1.hash(value, slotCapacity) + (functionNumber+1) * baseFunction2.hash(value, slotCapacity)) % slotCapacity;
     }
 
+    /**
+     * Sets all slot back to false
+     * --> bloom filter is empty again
+     */
+    public void emptyBloomFilter() {
+        bitSet.clear();
+    }
 
+    /**
+     * Reads in a BitSet with the same length
+     * Used on Server side to check afterwards what the Bloomfilter is containing
+     * @param toReadBitSet
+     * @throws Exception
+     */
+    public void readInBloomFilter(BitSet toReadBitSet) throws Exception {
+        if (toReadBitSet.length() != slotCapacity) {
+            throw new Exception("BitSet must have slotCapacity of " + slotCapacity);
+        }
+        bitSet = toReadBitSet;
+        System.out.println("ReadIn of BitSet was successful");
+    }
+
+    /**
+     * Prints out every slot with the corresponding value
+     */
     public void displayHashTable() {
 
         System.out.println("Hash Table: ");
@@ -73,5 +104,17 @@ public class BloomFilter {
         }
     }
 
+    /**
+     * Used for tes purpose to test correctnes of bloomfilter
+     * @param slotPosition
+     * @return
+     */
+    public boolean checkSlot(int slotPosition) {
+        return bitSet.get(slotPosition);
+    }
 
+
+    public int getSlotCapacity() {
+        return slotCapacity;
+    }
 }
