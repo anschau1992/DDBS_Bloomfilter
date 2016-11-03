@@ -1,3 +1,5 @@
+package BloomFilterJoin;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,24 +10,27 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-public class NormalJoin {
+public class BloomFilterJoin {
 
-    private static ArrayList<String> join(ArrayList<String> joinColumn) {
-        // joinColumn is column from other db with joinColumn[0] number of columns, joinColumn[1] column name and joinColumn[i] i>0 tuples
-        // we are expecting only one column and natural join
-        String columnName = joinColumn.get(1);
+    private static ArrayList<String> join(BloomFilter bf, String columnName) {
+
+        String query1 = "SELECT " + columnName + " FROM t1;";
+
+        ArrayList<String> joinColumn = executeQuery(query1);
 
         // TODO: update table_name
-        String query = "SELECT * FROM t1 WHERE";
+        String queryResult = "SELECT * FROM t1 WHERE";
 
-        // this okay? if we focus on communication cost, yes, if we also want to check performance cost, no
-        for (int i=2;i < joinColumn.size(); ++i) {
-            if(i == joinColumn.size()-1) {
-                query += " t1." + columnName + " = '" + joinColumn.get(i) + "';";
-            } else {
-                query += " t1." + columnName + " = '" + joinColumn.get(i) + "' OR";
+        int toCheck;
+        String content;
+        for (int i = 2; i<joinColumn.size(); ++i) {
+            content = joinColumn.get(i);
+            toCheck = 0;// TODO: convert database content in preferred type (integer?)
+            if(bf.check(toCheck)) {
+                queryResult += " t1." + columnName + " = '" + content + "' OR";
             }
         }
+        queryResult = queryResult.substring(0,queryResult.length() - 3).concat(";");
 
         return executeQuery(query);
 
@@ -131,5 +136,5 @@ public class NormalJoin {
 
         return queryResult;
     }
-    
+
 }
