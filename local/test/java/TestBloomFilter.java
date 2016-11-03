@@ -8,6 +8,7 @@ import hashFunctions.SimpleModuloHashFunction;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.image.SampleModel;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,12 +19,14 @@ import static org.junit.Assert.assertTrue;
 public class TestBloomFilter {
     final int slotCapacity = 20;
     final int numberOfBloomFunctions = 3;
+    HashFunction baseFunction1;
+    HashFunction baseFunction2;
 
     BloomFilter bloomFilter;
     @Before
     public void setup() {
-        HashFunction baseFunction1 = new SimpleModuloHashFunction();
-        HashFunction baseFunction2 = new SecondModuleHashFunction();
+        baseFunction1 = new SimpleModuloHashFunction();
+        baseFunction2 = new SecondModuleHashFunction();
 
         bloomFilter = new BloomFilter(slotCapacity, numberOfBloomFunctions, baseFunction1, baseFunction2);
     }
@@ -64,6 +67,44 @@ public class TestBloomFilter {
                 assertFalse("Position "+ i + " in Bloomfilter is false", bloomFilter.checkSlot(i));
             }
         }
+    }
+
+    /**
+     * Tests if the function readInBloomFilter of Class BloomFilter is functioning properly
+     */
+    @Test
+    public void testReadInBloomFilter() {
+        //fill local bloom-filter
+        bloomFilter.emptyBloomFilter();
+        bloomFilter.add(5);
+        bloomFilter.add(37);
+
+        //copy local to remote bloomFilter; add number, which should be overwritten afterwards
+        BloomFilter remoteBloomFilter = new BloomFilter(slotCapacity, numberOfBloomFunctions, baseFunction1, baseFunction2);
+        remoteBloomFilter.add(14);
+        assertTrue("Position 15 is true, before overwrite RemoteBloomFilter", remoteBloomFilter.checkSlot(15));
+        assertTrue("Position 15 is true, before overwrite RemoteBloomFilter", remoteBloomFilter.checkSlot(16));
+        assertTrue("Position 15 is true, before overwrite RemoteBloomFilter", remoteBloomFilter.checkSlot(17));
+
+        try {
+            remoteBloomFilter.readInBloomFilter(bloomFilter.getBitSet());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //test remote bloomFilter
+        assertTrue("Position 1 in Bloomfilter is true", remoteBloomFilter.checkSlot(1));
+        assertTrue("Position 3 in Bloomfilter is true", remoteBloomFilter.checkSlot(3));
+        assertTrue("Position 6 in Bloomfilter is true", remoteBloomFilter.checkSlot(6));
+        assertTrue("Position 7 in Bloomfilter is true", remoteBloomFilter.checkSlot(7));
+        assertTrue("Position 8 in Bloomfilter is true", remoteBloomFilter.checkSlot(8));
+        assertTrue("Position 19 in Bloomfilter is true", remoteBloomFilter.checkSlot(19));
+
+        //test overwriting of old slots set to true
+        assertFalse("Position 15 in Bloomfilter is false", remoteBloomFilter.checkSlot(15));
+        assertFalse("Position 16 in Bloomfilter is false", remoteBloomFilter.checkSlot(16));
+        assertFalse("Position 17 in Bloomfilter is false", remoteBloomFilter.checkSlot(17));
+
     }
 
 

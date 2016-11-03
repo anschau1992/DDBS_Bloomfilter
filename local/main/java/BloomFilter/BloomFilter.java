@@ -117,4 +117,8 @@ public class BloomFilter {
     public int getSlotCapacity() {
         return slotCapacity;
     }
+
+    public BitSet getBitSet() {
+        return bitSet;
+    }
 }

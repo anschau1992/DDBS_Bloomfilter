@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="336766d9-fa6b-465c-8991-73764e2b6271" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DDBS_Bloomfilter.iws" afterPath="$PROJECT_DIR$/DDBS_Bloomfilter.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/main/java/BloomFilter/BloomFilter.java" afterPath="$PROJECT_DIR$/local/main/java/BloomFilter/BloomFilter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/test/java/TestBloomFilter.java" afterPath="$PROJECT_DIR$/local/test/java/TestBloomFilter.java" />
     </list>
     <ignored path="DDBS_Bloomfilter.iws" />
@@ -30,8 +31,8 @@
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+            <state vertical-scroll-proportion="-10.0">
+              <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -41,9 +42,11 @@
         <entry file="file://$PROJECT_DIR$/local/main/java/BloomFilter/BloomFilter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="22" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="22" />
+              <caret line="120" column="29" selection-start-line="120" selection-start-column="29" selection-end-line="120" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3694#3695#0" expanded="true" />
+                <element signature="e#3723#3724#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -82,8 +85,8 @@
       <file leaf-file-name="TestBloomFilter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/local/test/java/TestBloomFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.81707317">
-              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.97252744">
+              <caret line="102" column="51" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -126,9 +129,9 @@
         <option value="$PROJECT_DIR$/local/main/java/FillBloomfilter.java" />
         <option value="$PROJECT_DIR$/local/main/java/hashFunctions/ModuloHashFunction.java" />
         <option value="$PROJECT_DIR$/local/main/java/hashFunctions/SimpleModuloHashFunction.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/local/main/java/BloomFilter.java" />
         <option value="$PROJECT_DIR$/local/main/java/BloomFilter/BloomfilterLengthException.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/local/main/java/BloomFilter/BloomFilter.java" />
         <option value="$PROJECT_DIR$/local/test/java/TestBloomFilter.java" />
       </list>
@@ -243,36 +246,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hashFunctions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DDBS_Bloomfilter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DDBS_Bloomfilter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="local" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BloomFilter" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -799,48 +772,48 @@
       <workItem from="1477933425863" duration="9270000" />
       <workItem from="1478088051430" duration="3161000" />
       <workItem from="1478092758735" duration="5696000" />
-      <workItem from="1478159834606" duration="1210000" />
+      <workItem from="1478159834606" duration="3654000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestBloomFilter - 2016.11.02 at 15h 41m 23s.xml">
-      <configuration name="TestBloomFilter" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestBloomFilter - 2016.11.02 at 15h 41m 37s.xml">
-      <configuration name="TestBloomFilter" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestBloomFilter - 2016.11.02 at 15h 49m 53s.xml">
-      <configuration name="TestBloomFilter" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="TestBloomFilter - 2016.11.03 at 09h 33m 22s.xml">
       <configuration name="TestBloomFilter" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestBloomFilter_testInsert5 - 2016.11.02 at 14h 45m 34s.xml">
-      <configuration name="TestBloomFilter.testInsert5" configurationId="JUnit" />
+    <history-entry file="TestBloomFilter - 2016.11.03 at 10h 23m 51s.xml">
+      <configuration name="TestBloomFilter" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestBloomFilter_testInsert5 - 2016.11.02 at 14h 46m 01s.xml">
-      <configuration name="TestBloomFilter.testInsert5" configurationId="JUnit" />
+    <history-entry file="TestBloomFilter - 2016.11.03 at 10h 28m 57s.xml">
+      <configuration name="TestBloomFilter" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestBloomFilter_testInsert5 - 2016.11.02 at 14h 53m 32s.xml">
-      <configuration name="TestBloomFilter.testInsert5" configurationId="JUnit" />
+    <history-entry file="TestBloomFilter - 2016.11.03 at 10h 29m 06s.xml">
+      <configuration name="TestBloomFilter" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestBloomFilter_testInsert5 - 2016.11.02 at 15h 34m 40s.xml">
-      <configuration name="TestBloomFilter.testInsert5" configurationId="JUnit" />
+    <history-entry file="TestBloomFilter - 2016.11.03 at 10h 31m 17s.xml">
+      <configuration name="TestBloomFilter" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestBloomFilter_testInsert5 - 2016.11.02 at 15h 35m 04s.xml">
-      <configuration name="TestBloomFilter.testInsert5" configurationId="JUnit" />
+    <history-entry file="TestBloomFilter - 2016.11.03 at 10h 31m 52s.xml">
+      <configuration name="TestBloomFilter" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestBloomFilter - 2016.11.03 at 10h 32m 03s.xml">
+      <configuration name="TestBloomFilter" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestBloomFilter - 2016.11.03 at 10h 34m 20s.xml">
+      <configuration name="TestBloomFilter" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestBloomFilter - 2016.11.03 at 10h 36m 09s.xml">
+      <configuration name="TestBloomFilter" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestBloomFilter_testInsert5 - 2016.11.02 at 15h 35m 30s.xml">
       <configuration name="TestBloomFilter.testInsert5" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19337000" />
+    <option name="totallyTimeSpent" value="21781000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="12" y="23" width="1658" height="962" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -850,12 +823,12 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938388" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18957347" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31990522" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938388" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20544554" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20544554" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -898,6 +871,8 @@
           <caret line="63" column="36" selection-start-line="63" selection-start-column="36" selection-end-line="63" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3694#3695#0" expanded="true" />
+            <element signature="e#3723#3724#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -935,6 +910,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3694#3695#0" expanded="true" />
+            <element signature="e#3723#3724#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -977,6 +954,8 @@
           <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3694#3695#0" expanded="true" />
+            <element signature="e#3723#3724#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1014,8 +993,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -1024,14 +1003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local/main/java/hashFunctions/SecondModuleHashFunction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1047,17 +1018,27 @@
     <entry file="file://$PROJECT_DIR$/local/main/java/BloomFilter/BloomFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="22" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="22" />
+          <caret line="120" column="29" selection-start-line="120" selection-start-column="29" selection-end-line="120" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3694#3695#0" expanded="true" />
+            <element signature="e#3723#3724#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/local/main/java/hashFunctions/SecondModuleHashFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/local/test/java/TestBloomFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81707317">
-          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.97252744">
+          <caret line="102" column="51" selection-start-line="102" selection-start-column="51" selection-end-line="102" selection-end-column="51" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="imports" expanded="true" />
