@@ -2,14 +2,17 @@
  * Created by Andy on 02.11.16.
  */
 import BloomFilter.BloomFilter;
+import com.carrotsearch.sizeof.RamUsageEstimator;
 import hashFunctions.HashFunction;
 import hashFunctions.SecondModuleHashFunction;
 import hashFunctions.SimpleModuloHashFunction;
 import org.junit.Before;
 import org.junit.Test;
+import com.carrotsearch.sizeof.RamUsageEstimator.*;
 
 import java.awt.image.SampleModel;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -105,6 +108,12 @@ public class TestBloomFilter {
         assertFalse("Position 16 in Bloomfilter is false", remoteBloomFilter.checkSlot(16));
         assertFalse("Position 17 in Bloomfilter is false", remoteBloomFilter.checkSlot(17));
 
+        BitSet testBitSet = new BitSet(127);
+
+        long size = RamUsageEstimator.sizeOf(testBitSet);
+
+
+        System.out.println("Size: " + size);
     }
 
 
