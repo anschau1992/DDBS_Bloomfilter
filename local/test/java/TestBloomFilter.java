@@ -3,14 +3,12 @@
  */
 import BloomFilter.BloomFilter;
 import com.carrotsearch.sizeof.RamUsageEstimator;
-import hashFunctions.HashFunction;
-import hashFunctions.SecondModuleHashFunction;
-import hashFunctions.SimpleModuloHashFunction;
+import BloomFilter.hashFunctions.HashFunction;
+import BloomFilter.hashFunctions.SecondModuleHashFunction;
+import BloomFilter.hashFunctions.SimpleModuloHashFunction;
 import org.junit.Before;
 import org.junit.Test;
-import com.carrotsearch.sizeof.RamUsageEstimator.*;
 
-import java.awt.image.SampleModel;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;

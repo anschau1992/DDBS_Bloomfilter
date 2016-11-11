@@ -1,4 +1,4 @@
-package hashFunctions;
+package BloomFilter.hashFunctions;
 
 
 /**

@@ -21,6 +21,21 @@
             <artifactId>java-sizeof</artifactId>
             <version>0.0.5</version>
         </dependency>
+
+        <!-- Driver to connect to mySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.38</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
+        </dependency>
+
     </dependencies>
 
 

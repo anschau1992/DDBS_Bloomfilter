@@ -1,4 +1,4 @@
-package BloomFilter; /**
+package network.BloomFilterJoin; /**
  * Created by Andy on 31.10.16.
  */
 
@@ -116,7 +116,6 @@ public class BloomFilter {
     public int getSlotCapacity() {
         return slotCapacity;
     }
-
     public BitSet getBitSet() {
         return bitSet;
     }
