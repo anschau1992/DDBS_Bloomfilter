@@ -1,11 +1,25 @@
 #UZH - Distributed Database Systems HS2016
 ####Mirco ??? & Andreas Schaufelbühl
 
+
+###Setup
+* Install local mySQL: https://dev.mysql.com/downloads/installer/
+* Integrate test_db containing test Data into mySQL DB: https://github.com/datacharmer/test_db
+
+###Project structure
+The project is divided into the three following parts:
+* client: contains the client-side code
+* server: contains the server-side code
+* shared: contains code used by both sides (BloomFilter, Employees,..)
+
+
+###Start
+* Run ApplicationServer.main() first
+* Run Client.main()
+
 TODO:
-* Remote communication --> RMI
-* Local Communication with MySql-DB
 * Integration of two good hash-functions
-* Find java-class for object data-size printing
+* Compare size of returning message with BloomFilter vs. classic Join
 
 Links:
 * Bloomfilter: http://billmill.org/bloomfilter-tutorial/
