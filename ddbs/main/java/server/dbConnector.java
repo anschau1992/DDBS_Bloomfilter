@@ -49,7 +49,13 @@ public class DBConnector {
         return uniqueInstance;
     }
 
-
+    /**
+     * Get all the employees from DB having the exact same name as the given String parameter
+     * @param firstName of the searched employees
+     * @return a Array of Employees
+     * @return null if failing
+     * @throws SQLException
+     */
     public ArrayList<Employee> getEmployeesByFirstName(String firstName) throws SQLException {
         String sqlQuery = "SELECT * FROM employees " +
                                 "WHERE first_name = '" + firstName + "'";
@@ -78,6 +84,11 @@ public class DBConnector {
         return null;
     }
 
+    /**
+     * Get all the ID's of the employees in the DB
+     * @return Array of ID's as String
+     * @throws SQLException
+     */
     public ArrayList <String> getAllEmployeeIds () throws SQLException {
         String sqlQuery = "SELECT emp_no FROM employees";
         PreparedStatement statement = connection.prepareStatement(sqlQuery);

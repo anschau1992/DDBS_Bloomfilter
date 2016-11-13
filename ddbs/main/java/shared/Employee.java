@@ -3,6 +3,10 @@ package shared;
 /**
  * Created by Andy on 10.11.16.
  */
+
+/**
+ * A class representing exactly the employees-table of the DB: https://github.com/datacharmer/test_db
+ */
 public class Employee {
     String emp_no;
     String birthdate;

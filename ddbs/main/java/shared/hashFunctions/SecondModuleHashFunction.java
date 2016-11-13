@@ -3,9 +3,10 @@ package shared.hashFunctions;
 
 /**
  * Created by Andy on 31.10.16.
- *
- * This function is good in use of a double-hash as the second function
- * --> there is a condition for the second hash, that it does not returns 0 ==> I do not understand why exactly
+ */
+
+/**
+ * Simple hashing function for testing purpose. Not good for BloomFilter, because of imbalanced distribution
  */
 public class SecondModuleHashFunction implements HashFunction {
 

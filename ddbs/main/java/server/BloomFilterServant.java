@@ -26,10 +26,10 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
     }
 
     /**
-     * Receives a new Bloomfilter from client side and copies it for using.
-     * In order to communicate proberly. Server side and client.Client side need to interact with the same Bloomfilter
+     * Receives a new BloomFilter from client side and copies it for using.
+     * In order to communicate properly. Server side and client.Client side need to interact with the exact same BloomFilter
      * @param slotSize is the number of slots within the Bitset of the Bloomfilter
-     * @param numberOfHashFunctions generate the numbers of hashfunctions used for the bloomfilter
+     * @param numberOfHashFunctions generate the numbers of hashFunctions used for the bloomFilter
      * @return confirmation message
      */
     public String createNewBloomFilter(int slotSize, int numberOfHashFunctions) {
@@ -37,9 +37,16 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
         return "New Bloomfilter is set";
     }
 
-    public String sendBitset(BitSet bitset) {
+    /**
+     * Recevies a loaded bitSet from client side.
+     * Iterates through the database and check for matches of Employee's ID with the BloomFilter of the BitSet
+     * Returns all matching Employees (including possibly false positives)
+     * @param bitSet used by the BloomFilter
+     * @return matching employees, incl. false positives
+     */
+    public String sendBitset(BitSet bitSet) {
         try {
-            this.bloomFilter.readInBloomFilter(bitset);
+            this.bloomFilter.readInBloomFilter(bitSet);
         } catch (Exception e) {
             System.err.println(e);
             return null;
@@ -52,8 +59,8 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
             //all ID's of DB
             ArrayList<String> employeeIds = connector.getAllEmployeeIds();
 
-            //ID's containing in Bloomfilter & DB (incl. possible false positives)
-            idsInBLoomFilter = checkIDsinBloomfilter(employeeIds);
+            //ID's containing in BloomFilter & DB (incl. possible false positives)
+            idsInBLoomFilter = checkIDsInBloomfilter(employeeIds);
             ArrayList<Employee> returningEmployees =  getWholeEmployeeData(idsInBLoomFilter);
 
             Gson gson = new GsonBuilder().create();
@@ -66,12 +73,12 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
     }
 
     /**
-     * Checks all ID given as Parameter, if they are also in the Bloomfilter
+     * Checks all ID given as Parameter, if they are also in the BloomFilter
      * IMPORTANT: The returning ID's can include false-positives
      * @param employeeIds
-     * @return all the ID also found in the bloom filter
+     * @return all the ID matching with the BloomFilter's BitSet
      */
-    private ArrayList<String> checkIDsinBloomfilter(ArrayList<String> employeeIds) {
+    private ArrayList<String> checkIDsInBloomfilter(ArrayList<String> employeeIds) {
         ArrayList<String> idsInBloomFilter = new ArrayList<String>();
         for (String employeeID: employeeIds) {
             if(bloomFilter.check(employeeID.hashCode())) {

@@ -46,8 +46,9 @@ public class Client {
         service = (BloomFilterService) Naming.lookup("rmi://localhost:3000/bloom");
         System.out.println("Remote Server: " + service.createNewBloomFilter(slotCapacity, numberOfBloomfunctions));
 
-        //TODO fill in Bitset in Bloomfilter with inputs of client DB
+
         //Test with some test-Employees ID's
+        //TODO fill in Bitset in Bloomfilter with inputs of client DB
         bloomFilter.add(("10004").hashCode());
         bloomFilter.add(("10005").hashCode());
         bloomFilter.add(("20012").hashCode());
@@ -60,6 +61,8 @@ public class Client {
         for (Employee emp: employees) {
             emp.printOut();
         }
+
+        printSizeOf(gsonEmployees);
 
         //TODO receive join and handle it --> get Size of Answer
 
@@ -98,5 +101,9 @@ public class Client {
         }
 
         return 0;
+    }
+
+    private static void printSizeOf(String gsonEmployees) {
+
     }
 }
