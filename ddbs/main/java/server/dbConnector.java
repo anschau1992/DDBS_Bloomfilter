@@ -1,5 +1,6 @@
 package server;
 
+import shared.Dept_Manager;
 import shared.Employee;
 import shared.Gender;
 
@@ -72,6 +73,7 @@ public class DBConnector {
         return array;
     }
 
+
     public Employee getEmployeeByID (String id) throws SQLException {
         String sqlQuery = "SELECT * FROM employees " +
                 "WHERE emp_no = '" + id + "'";
@@ -90,10 +92,10 @@ public class DBConnector {
      * @throws SQLException
      */
     public ArrayList <String> getAllEmployeeIds () throws SQLException {
+        ArrayList<String> array = new ArrayList<String>();
+
         String sqlQuery = "SELECT emp_no FROM employees";
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
-
-        ArrayList<String> array = new ArrayList<String>();
 
         ResultSet result = statement.executeQuery();
         while (result.next()) {
@@ -101,6 +103,24 @@ public class DBConnector {
         }
 
         return array;
+    }
+
+    /**
+     * Gets all the Dept_Managers form the DB as Dept_Managers Objects
+     * @return a ArrayList of Dept_Managers
+     * @throws SQLException if request on DB not successful
+     */
+    public ArrayList<Dept_Manager> getAllDeptManager() throws SQLException {
+        ArrayList<Dept_Manager> dept_managers = new ArrayList<Dept_Manager>();
+
+        String sqlQuery = "SELECT * FROM dept_manager";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+
+        ResultSet result = statement.executeQuery();
+        while(result.next()) {
+            dept_managers.add(createDBDeptManager(result));
+        }
+        return dept_managers;
     }
 
     /**
@@ -119,5 +139,15 @@ public class DBConnector {
         employee.setHire_date(result.getString("hire_date"));
 
         return employee;
+    }
+
+    private Dept_Manager createDBDeptManager(ResultSet result) throws SQLException {
+        Dept_Manager dept_manager = new Dept_Manager();
+        dept_manager.setEmp_no(result.getString("emp_no"));
+        dept_manager.setDept_no(result.getString("dept_no"));
+        dept_manager.setFrom_date(result.getString("from_date"));
+        dept_manager.setTo_date(result.getString("to_date"));
+
+        return dept_manager;
     }
 }

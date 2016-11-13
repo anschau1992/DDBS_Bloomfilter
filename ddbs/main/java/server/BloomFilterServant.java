@@ -2,7 +2,10 @@ package server;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import shared.BloomFilter;
+import shared.Dept_Manager;
+import shared.JoinedEmployee;
 import shared.hashFunctions.SecondModuleHashFunction;
 import shared.hashFunctions.SimpleModuloHashFunction;
 import shared.Employee;
@@ -95,5 +98,54 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
         }
         return employees;
     }
+
+
+    public String sendDeptManagerClassic(String gsonDeptManagers) throws RemoteException {
+        Gson gson = new GsonBuilder().create();
+        ArrayList<Dept_Manager> deptManagers = gson.fromJson(gsonDeptManagers, new TypeToken<ArrayList<Dept_Manager>>() {
+        }.getType());
+
+
+        ArrayList<JoinedEmployee> joinedEmployees = null;
+        try{
+            joinedEmployees = joinDeptManagersWithEmployees(deptManagers);
+        } catch (SQLException e) {
+            System.out.println("Joining of Employee and Dept_manager failed: " + e);
+        }
+
+        //stringify
+        return gson.toJson(joinedEmployees);
+    }
+
+    private ArrayList<JoinedEmployee> joinDeptManagersWithEmployees(ArrayList <Dept_Manager> deptManagers) throws SQLException {
+        connector = DBConnector.getUniqueInstance();
+        ArrayList<JoinedEmployee>joinedEmployees= new ArrayList<JoinedEmployee>();
+        for (Dept_Manager deptManger: deptManagers) {
+            Employee employee = connector.getEmployeeByID(deptManger.getEmp_no());
+            JoinedEmployee joinedEmployee = createJoinedEmployee(deptManger, employee);
+            joinedEmployees.add(joinedEmployee);
+        }
+        return joinedEmployees;
+    }
+
+    private JoinedEmployee createJoinedEmployee(Dept_Manager deptManger, Employee employee) {
+        JoinedEmployee joinedEmployee = new JoinedEmployee();
+
+        //attributes of deptManager
+        joinedEmployee.setEmp_no(deptManger.getEmp_no());
+        joinedEmployee.setDept_no(deptManger.getDept_no());
+        joinedEmployee.setFrom_date(deptManger.getFrom_date());
+        joinedEmployee.setTo_date(deptManger.getTo_date());
+
+        //attributes of employee
+        joinedEmployee.setBirthdate(employee.getBirthdate());
+        joinedEmployee.setFirst_name(employee.getFirst_name());
+        joinedEmployee.setLast_name(employee.getLast_name());
+        joinedEmployee.setGender(employee.getGender());
+        joinedEmployee.setHire_date(employee.getHire_date());
+
+        return joinedEmployee;
+    }
+
 
 }

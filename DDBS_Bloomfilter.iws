@@ -2,14 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="336766d9-fa6b-465c-8991-73764e2b6271" name="Default" comment="Merge branch 'feature/conn_serv_db' of github.com:anschau1992/DDBS_Bloomfilter into feature/RMI&#10;&#10;# Conflicts:&#10;#&#9;pom.xml&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ddbs/main/java/client/SizeComparer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ddbs/main/java/shared/Dept_Manager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ddbs/main/java/shared/JoinedEmployee.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/client/Client$1.class" afterPath="$PROJECT_DIR$/target/classes/client/Client$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/client/Client.class" afterPath="$PROJECT_DIR$/target/classes/client/Client.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/server/BloomFilterServant.class" afterPath="$PROJECT_DIR$/target/classes/server/BloomFilterServant.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/server/BloomFilterService.class" afterPath="$PROJECT_DIR$/target/classes/server/BloomFilterService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/server/DBConnector.class" afterPath="$PROJECT_DIR$/target/classes/server/DBConnector.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/shared/Employee.class" afterPath="$PROJECT_DIR$/target/classes/shared/Employee.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/shared/Gender.class" afterPath="$PROJECT_DIR$/target/classes/shared/Gender.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/shared/hashFunctions/SecondModuleHashFunction.class" afterPath="$PROJECT_DIR$/target/classes/shared/hashFunctions/SecondModuleHashFunction.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/shared/hashFunctions/SimpleModuloHashFunction.class" afterPath="$PROJECT_DIR$/target/classes/shared/hashFunctions/SimpleModuloHashFunction.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DDBS_Bloomfilter.ipr" afterPath="$PROJECT_DIR$/DDBS_Bloomfilter.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DDBS_Bloomfilter.iws" afterPath="$PROJECT_DIR$/DDBS_Bloomfilter.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ddbs/main/java/client/Client.java" afterPath="$PROJECT_DIR$/ddbs/main/java/client/Client.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ddbs/main/java/server/BloomFilterServant.java" afterPath="$PROJECT_DIR$/ddbs/main/java/server/BloomFilterServant.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ddbs/main/java/server/BloomFilterService.java" afterPath="$PROJECT_DIR$/ddbs/main/java/server/BloomFilterService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ddbs/main/java/shared/Employee.java" afterPath="$PROJECT_DIR$/ddbs/main/java/shared/Employee.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ddbs/main/java/shared/Gender.java" afterPath="$PROJECT_DIR$/ddbs/main/java/shared/Gender.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/HashFunction.java" afterPath="$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/HashFunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/SecondModuleHashFunction.java" afterPath="$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/SecondModuleHashFunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/SimpleModuloHashFunction.java" afterPath="$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/SimpleModuloHashFunction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ddbs/main/java/server/dbConnector.java" afterPath="$PROJECT_DIR$/ddbs/main/java/server/dbConnector.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
     </list>
     <ignored path="DDBS_Bloomfilter.iws" />
@@ -77,6 +87,26 @@
       </PATH_ELEMENT>
     </PATH>
   </component>
+  <component name="DockManager">
+    <window id="2">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="Employee.java" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/ddbs/main/java/shared/Employee.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="1.1224489">
+                    <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="72" selection-end-column="5" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="DDBS_Bloomfilter" />
@@ -87,16 +117,42 @@
         <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/DBConnector.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="38" />
+              <caret line="116" column="76" selection-start-line="116" selection-start-column="76" selection-end-line="116" selection-end-column="76" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#DBConnector#0;class#DBConnector#0" expanded="false" />
-                <element signature="method#getUniqueInstance#0;class#DBConnector#0" expanded="false" />
-                <element signature="e#2048#2058#0" expanded="true" />
-                <element signature="e#2992#3000#0" expanded="true" />
-                <marker date="1479040020000" expanded="true" signature="1765:1864" placeholder="SELECT * FRO... employees" />
-                <marker date="1479040020000" expanded="true" signature="2281:2353" placeholder="SELECT * FRO... employees" />
-                <marker date="1479040020000" expanded="true" signature="2836:2864" placeholder="SELECT emp_n... employees" />
+                <element signature="e#3539#3553#0" expanded="true" />
+                <marker date="1479046346000" expanded="true" signature="1793:1892" placeholder="SELECT * FRO... employees" />
+                <marker date="1479046346000" expanded="true" signature="2310:2382" placeholder="SELECT * FRO... employees" />
+                <marker date="1479046346000" expanded="true" signature="2925:2953" placeholder="SELECT emp_n... employees" />
+                <marker date="1479046346000" expanded="true" signature="3585:3611" placeholder="SELECT * FRO... dept_manager" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.625">
+              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SizeComparer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ddbs/main/java/client/SizeComparer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+              <folding>
+                <element signature="e#551#552#0" expanded="true" />
+                <element signature="e#611#612#0" expanded="true" />
+                <element signature="e#659#660#0" expanded="true" />
+                <element signature="e#714#715#0" expanded="true" />
+                <element signature="e#764#765#0" expanded="true" />
+                <element signature="e#828#829#0" expanded="true" />
+                <element signature="e#897#898#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -106,9 +162,10 @@
         <entry file="file://$PROJECT_DIR$/ddbs/main/java/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+              <caret line="75" column="62" selection-start-line="75" selection-start-column="62" selection-end-line="75" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#getDeptManagerFromLocalDB#0;class#Client#0" expanded="false" />
                 <element signature="method#checkSlotCapacity#0;class#Client#0" expanded="false" />
                 <element signature="method#checkBloomfunctionsNumberCapacity#0;class#Client#0" expanded="false" />
               </folding>
@@ -116,11 +173,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
+      <file leaf-file-name="SecondModuleHashFunction.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/SecondModuleHashFunction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29411766">
-              <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="87" />
+            <state vertical-scroll-proportion="0.29069766">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BloomFilterServant.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/BloomFilterServant.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.740741">
+              <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4676#4692#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ApplicationServer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/ApplicationServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="17" column="41" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BloomFilterService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/BloomFilterService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -132,8 +222,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -187,16 +277,19 @@
         <option value="$PROJECT_DIR$/local/main/java/Client.java" />
         <option value="$PROJECT_DIR$/server/main/java/ddbs_utility/hashFunctions/HashFunction.java" />
         <option value="$PROJECT_DIR$/ddbs/main/java/server/ApplicationServer.java" />
-        <option value="$PROJECT_DIR$/ddbs/main/java/client/Client.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/ddbs/main/java/server/BloomFilterServant.java" />
-        <option value="$PROJECT_DIR$/ddbs/main/java/server/BloomFilterService.java" />
-        <option value="$PROJECT_DIR$/ddbs/main/java/server/DBConnector.java" />
         <option value="$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/HashFunction.java" />
         <option value="$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/SimpleModuloHashFunction.java" />
         <option value="$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/SecondModuleHashFunction.java" />
-        <option value="$PROJECT_DIR$/ddbs/main/java/shared/Employee.java" />
         <option value="$PROJECT_DIR$/ddbs/main/java/shared/Gender.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/ddbs/main/java/shared/Dept_Manager.java" />
+        <option value="$PROJECT_DIR$/ddbs/main/java/server/DBConnector.java" />
+        <option value="$PROJECT_DIR$/ddbs/main/java/server/BloomFilterService.java" />
+        <option value="$PROJECT_DIR$/ddbs/main/java/shared/Employee.java" />
+        <option value="$PROJECT_DIR$/ddbs/main/java/shared/JoinedEmployee.java" />
+        <option value="$PROJECT_DIR$/ddbs/main/java/server/BloomFilterServant.java" />
+        <option value="$PROJECT_DIR$/ddbs/main/java/client/SizeComparer.java" />
+        <option value="$PROJECT_DIR$/ddbs/main/java/client/Client.java" />
       </list>
     </option>
   </component>
@@ -218,7 +311,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="6" />
+    <option name="x" value="23" />
     <option name="y" value="23" />
     <option name="width" value="1897" />
     <option name="height" value="979" />
@@ -248,6 +341,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -390,7 +484,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
@@ -459,7 +552,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="client.Client" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="15000 12" />
+      <option name="PROGRAM_PARAMETERS" value="80000 12" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -967,7 +1060,8 @@
       <workItem from="1478159834606" duration="5708000" />
       <workItem from="1478522184420" duration="1971000" />
       <workItem from="1478695013490" duration="26372000" />
-      <workItem from="1479033155455" duration="6687000" />
+      <workItem from="1479033155455" duration="9066000" />
+      <workItem from="1479043813157" duration="10603000" />
     </task>
     <servers />
   </component>
@@ -1004,39 +1098,39 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58865000" />
+    <option name="totallyTimeSpent" value="71847000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="6" y="23" width="1897" height="979" extended-state="0" />
+    <frame x="23" y="23" width="1897" height="979" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Amazon EC2" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32752612" sideWeight="0.49784616" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32752612" sideWeight="0.49784616" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28485578" sideWeight="0.5095385" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28485578" sideWeight="0.5095385" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32853717" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28455284" sideWeight="0.49046153" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36817655" sideWeight="0.49046153" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32752612" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984614" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938388" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938388" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15040432" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10619946" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932693" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329849" sideWeight="0.49046153" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45876887" sideWeight="0.49046153" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932693" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32868758" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932693" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1102,18 +1196,30 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ddbs/main/java/server/BloomFilterServant.java</url>
-          <line>59</line>
+          <line>62</line>
           <properties />
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ddbs/main/java/client/Client.java</url>
-          <line>60</line>
+          <line>132</line>
           <properties />
-          <option name="timeStamp" value="26" />
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ddbs/main/java/server/BloomFilterServant.java</url>
+          <line>116</line>
+          <properties />
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ddbs/main/java/client/Client.java</url>
+          <line>84</line>
+          <properties />
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="28" />
+      <option name="time" value="33" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1122,6 +1228,14 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/BloomFilterService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ddbs/test/java/TestBloomFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1136,27 +1250,25 @@
           <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#DBConnector#0;class#DBConnector#0" expanded="false" />
-            <element signature="method#getUniqueInstance#0;class#DBConnector#0" expanded="false" />
-            <element signature="e#2048#2058#0" expanded="true" />
-            <element signature="e#2992#3000#0" expanded="true" />
-            <marker date="1479040020000" expanded="true" signature="1765:1864" placeholder="SELECT * FRO... employees" />
-            <marker date="1479040020000" expanded="true" signature="2281:2353" placeholder="SELECT * FRO... employees" />
-            <marker date="1479040020000" expanded="true" signature="2836:2864" placeholder="SELECT emp_n... employees" />
+            <element signature="e#3539#3553#0" expanded="true" />
+            <marker date="1479046346000" expanded="true" signature="1793:1892" placeholder="SELECT * FRO... employees" />
+            <marker date="1479046346000" expanded="true" signature="2310:2382" placeholder="SELECT * FRO... employees" />
+            <marker date="1479046346000" expanded="true" signature="2925:2953" placeholder="SELECT emp_n... employees" />
+            <marker date="1479046346000" expanded="true" signature="3585:3611" placeholder="SELECT * FRO... dept_manager" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="dbDummy://dbtable:/DDBS_Bloomfilter1a421b11/abb6ce86-f36a-4490-b19a-ad40fe15cce3/employees.employees">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -1166,6 +1278,7 @@
           <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4676#4692#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1184,6 +1297,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#getDeptManagerFromLocalDB#0;class#Client#0" expanded="false" />
             <element signature="method#checkSlotCapacity#0;class#Client#0" expanded="false" />
             <element signature="method#checkBloomfunctionsNumberCapacity#0;class#Client#0" expanded="false" />
           </folding>
@@ -1202,7 +1316,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1239,7 +1352,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="50" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1361,72 +1473,26 @@
       </provider>
     </entry>
     <entry file="dbDummy://dbview:/DDBS_Bloomfilter1a421b11/abb6ce86-f36a-4490-b19a-ad40fe15cce3/employees.current_dept_emp">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="dbDummy://dbview:/DDBS_Bloomfilter1a421b11/abb6ce86-f36a-4490-b19a-ad40fe15cce3/employees.dept_emp_latest_date">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
-    </entry>
-    <entry file="uml://DATABASE/abb6ce86-f36a-4490-b19a-ad40fe15cce3.SCHEMA:employees">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>DATABASE</ID>
-          <OriginalElement>abb6ce86-f36a-4490-b19a-ad40fe15cce3.SCHEMA:employees</OriginalElement>
-          <nodes>
-            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.titles</node>
-            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.employees</node>
-            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.dept_emp</node>
-            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.departments</node>
-            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.dept_manager</node>
-            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.salaries</node>
-            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.VIEW:employees.dept_emp_latest_date</node>
-            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.VIEW:employees.current_dept_emp</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="0.9625807468431463" x="270.0" y="307.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Columns</Category>
-            <Category>Key columns</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://dbtable:/DDBS_Bloomfilter1a421b11/abb6ce86-f36a-4490-b19a-ad40fe15cce3/employees.salaries">
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/abb6ce86-f36a-4490-b19a-ad40fe15cce3/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1438,72 +1504,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/DDBS_Bloomfilter1a421b11/abb6ce86-f36a-4490-b19a-ad40fe15cce3/employees.employees">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.125">
-          <caret line="18" column="53" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/NormalJoin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ddbs/main/java/shared/BloomFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ddbs/main/java/shared/Employee.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
-          <folding>
-            <element signature="e#379#380#0" expanded="true" />
-            <element signature="e#423#424#0" expanded="true" />
-            <element signature="e#459#460#0" expanded="true" />
-            <element signature="e#495#496#0" expanded="true" />
-            <element signature="e#527#528#0" expanded="true" />
-            <element signature="e#577#578#0" expanded="true" />
-            <element signature="e#619#620#0" expanded="true" />
-            <element signature="e#656#657#0" expanded="true" />
-            <element signature="e#689#690#0" expanded="true" />
-            <element signature="e#741#742#0" expanded="true" />
-            <element signature="e#785#786#0" expanded="true" />
-            <element signature="e#821#822#0" expanded="true" />
-            <element signature="e#853#854#0" expanded="true" />
-            <element signature="e#903#904#0" expanded="true" />
-            <element signature="e#945#946#0" expanded="true" />
-            <element signature="e#978#979#0" expanded="true" />
-            <element signature="e#1007#1008#0" expanded="true" />
-            <element signature="e#1051#1052#0" expanded="true" />
-            <element signature="e#1087#1088#0" expanded="true" />
-            <element signature="e#1123#1124#0" expanded="true" />
-            <element signature="e#1155#1156#0" expanded="true" />
-            <element signature="e#1205#1206#0" expanded="true" />
-            <element signature="e#1247#1248#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1519,7 +1523,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.30612245">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1531,36 +1534,200 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/SecondModuleHashFunction.java">
+    <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45918366">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.29411766">
+          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/abb6ce86-f36a-4490-b19a-ad40fe15cce3.SCHEMA:employees">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>abb6ce86-f36a-4490-b19a-ad40fe15cce3.SCHEMA:employees</OriginalElement>
+          <nodes>
+            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.titles</node>
+            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.employees</node>
+            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.dept_emp</node>
+            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.dept_manager</node>
+            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.departments</node>
+            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.TABLE:employees.salaries</node>
+            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.VIEW:employees.dept_emp_latest_date</node>
+            <node x="" y="">abb6ce86-f36a-4490-b19a-ad40fe15cce3.VIEW:employees.current_dept_emp</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.1311111111111112" x="235.0" y="227.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Columns</Category>
+            <Category>Key columns</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/DDBS_Bloomfilter1a421b11/abb6ce86-f36a-4490-b19a-ad40fe15cce3/employees.departments">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/ApplicationServer.java">
+    <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/NormalJoin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38265306">
-          <caret line="17" column="41" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/abb6ce86-f36a-4490-b19a-ad40fe15cce3/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/DDBS_Bloomfilter1a421b11/abb6ce86-f36a-4490-b19a-ad40fe15cce3/employees.salaries">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/DDBS_Bloomfilter1a421b11/abb6ce86-f36a-4490-b19a-ad40fe15cce3/employees.employees">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/DDBS_Bloomfilter1a421b11/abb6ce86-f36a-4490-b19a-ad40fe15cce3/employees.dept_manager">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddbs/main/java/shared/JoinedEmployee.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40816328">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          <folding>
+            <element signature="e#466#467#0" expanded="true" />
+            <element signature="e#495#496#0" expanded="true" />
+            <element signature="e#539#540#0" expanded="true" />
+            <element signature="e#575#576#0" expanded="true" />
+            <element signature="e#611#612#0" expanded="true" />
+            <element signature="e#643#644#0" expanded="true" />
+            <element signature="e#693#694#0" expanded="true" />
+            <element signature="e#735#736#0" expanded="true" />
+            <element signature="e#772#773#0" expanded="true" />
+            <element signature="e#805#806#0" expanded="true" />
+            <element signature="e#857#858#0" expanded="true" />
+            <element signature="e#901#902#0" expanded="true" />
+            <element signature="e#937#938#0" expanded="true" />
+            <element signature="e#969#970#0" expanded="true" />
+            <element signature="e#1019#1020#0" expanded="true" />
+            <element signature="e#1061#1062#0" expanded="true" />
+            <element signature="e#1094#1095#0" expanded="true" />
+            <element signature="e#1123#1124#0" expanded="true" />
+            <element signature="e#1167#1168#0" expanded="true" />
+            <element signature="e#1203#1204#0" expanded="true" />
+            <element signature="e#1239#1240#0" expanded="true" />
+            <element signature="e#1271#1272#0" expanded="true" />
+            <element signature="e#1321#1322#0" expanded="true" />
+            <element signature="e#1363#1364#0" expanded="true" />
+            <element signature="e#1397#1398#0" expanded="true" />
+            <element signature="e#1427#1428#0" expanded="true" />
+            <element signature="e#1473#1474#0" expanded="true" />
+            <element signature="e#1511#1512#0" expanded="true" />
+            <element signature="e#1547#1548#0" expanded="true" />
+            <element signature="e#1579#1580#0" expanded="true" />
+            <element signature="e#1629#1630#0" expanded="true" />
+            <element signature="e#1671#1672#0" expanded="true" />
+            <element signature="e#1705#1706#0" expanded="true" />
+            <element signature="e#1735#1736#0" expanded="true" />
+            <element signature="e#1781#1782#0" expanded="true" />
+            <element signature="e#1819#1820#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddbs/main/java/shared/Dept_Manager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74489796">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="49" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddbs/main/java/shared/Employee.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1224489">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="72" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.625">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/BloomFilterService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28061223">
-          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/ApplicationServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="41" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/BloomFilterServant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5612245">
-          <caret line="96" column="5" selection-start-line="96" selection-start-column="5" selection-end-line="96" selection-end-column="5" />
+        <state vertical-scroll-proportion="-8.740741">
+          <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4676#4692#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1568,16 +1735,30 @@
     <entry file="file://$PROJECT_DIR$/ddbs/main/java/server/DBConnector.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="38" />
+          <caret line="116" column="76" selection-start-line="116" selection-start-column="76" selection-end-line="116" selection-end-column="76" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#DBConnector#0;class#DBConnector#0" expanded="false" />
-            <element signature="method#getUniqueInstance#0;class#DBConnector#0" expanded="false" />
-            <element signature="e#2048#2058#0" expanded="true" />
-            <element signature="e#2992#3000#0" expanded="true" />
-            <marker date="1479040020000" expanded="true" signature="1765:1864" placeholder="SELECT * FRO... employees" />
-            <marker date="1479040020000" expanded="true" signature="2281:2353" placeholder="SELECT * FRO... employees" />
-            <marker date="1479040020000" expanded="true" signature="2836:2864" placeholder="SELECT emp_n... employees" />
+            <element signature="e#3539#3553#0" expanded="true" />
+            <marker date="1479046346000" expanded="true" signature="1793:1892" placeholder="SELECT * FRO... employees" />
+            <marker date="1479046346000" expanded="true" signature="2310:2382" placeholder="SELECT * FRO... employees" />
+            <marker date="1479046346000" expanded="true" signature="2925:2953" placeholder="SELECT emp_n... employees" />
+            <marker date="1479046346000" expanded="true" signature="3585:3611" placeholder="SELECT * FRO... dept_manager" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddbs/main/java/client/SizeComparer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="e#551#552#0" expanded="true" />
+            <element signature="e#611#612#0" expanded="true" />
+            <element signature="e#659#660#0" expanded="true" />
+            <element signature="e#714#715#0" expanded="true" />
+            <element signature="e#764#765#0" expanded="true" />
+            <element signature="e#828#829#0" expanded="true" />
+            <element signature="e#897#898#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1585,19 +1766,20 @@
     <entry file="file://$PROJECT_DIR$/ddbs/main/java/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+          <caret line="75" column="62" selection-start-line="75" selection-start-column="62" selection-end-line="75" selection-end-column="62" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#getDeptManagerFromLocalDB#0;class#Client#0" expanded="false" />
             <element signature="method#checkSlotCapacity#0;class#Client#0" expanded="false" />
             <element signature="method#checkBloomfunctionsNumberCapacity#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/ddbs/main/java/shared/hashFunctions/SecondModuleHashFunction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29411766">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="87" />
+        <state vertical-scroll-proportion="0.29069766">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding />
         </state>
       </provider>

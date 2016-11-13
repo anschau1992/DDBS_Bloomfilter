@@ -6,30 +6,33 @@ package client; /**
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import server.DBConnector;
 import shared.BloomFilter;
+import shared.Dept_Manager;
+import shared.JoinedEmployee;
 import shared.hashFunctions.SecondModuleHashFunction;
 import shared.hashFunctions.SimpleModuloHashFunction;
 import server.BloomFilterService;
 import shared.Employee;
+import com.carrotsearch.sizeof.*;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 public class Client {
 
-    private Client() {
-    }
-
     public static void main(String[] args) throws RemoteException, NotBoundException, MalformedURLException {
-        BloomFilterService service;
+
         int slotCapacity = 0;
         int numberOfBloomfunctions = 0;
+
         //check arguments
-        if(args.length == 2) {
+        if (args.length == 2) {
             slotCapacity = checkSlotCapacity(args[0]);
             numberOfBloomfunctions = checkBloomfunctionsNumberCapacity(args[1]);
         } else {
@@ -37,35 +40,76 @@ public class Client {
             System.exit(0);
         }
 
-        //Setup BloomFilter with given arguments
+        BloomFilterService service;
+        SizeComparer sizeComparer = new SizeComparer();
+
+
+        //Create connection to remote Server
+        //TODO: change to remote binding for ec2
+        service = (BloomFilterService) Naming.lookup("rmi://localhost:3000/bloom");
+
+        //Get Dept_Manager of Local DB
+        ArrayList<Dept_Manager> deptManagers = getDeptManagerFromLocalDB();
+
+        //Send dept managers classicly for join
+        Gson gson = new GsonBuilder().create();
+        String gsonDeptManagers = gson.toJson(deptManagers);
+        sizeComparer.increaseClassicJoinSize(RamUsageEstimator.sizeOf(gsonDeptManagers));
+
+        String gsonJoinedEmployees = service.sendDeptManagerClassic(gsonDeptManagers);
+        sizeComparer.increaseClassicJoinSize(RamUsageEstimator.sizeOf(gsonJoinedEmployees));
+
+        ArrayList<JoinedEmployee> joinedEmployees = gson.fromJson(gsonJoinedEmployees, new TypeToken<ArrayList<JoinedEmployee>>() {
+        }.getType());
+        sizeComparer.setNumberOfJoins(joinedEmployees.size());
+
+
+
+        //Setup BloomFilter with given arguments on Client & Server
+        System.out.println("Remote Server: " + service.createNewBloomFilter(slotCapacity, numberOfBloomfunctions));
         BloomFilter bloomFilter = new BloomFilter(slotCapacity, numberOfBloomfunctions,
                 new SimpleModuloHashFunction(), new SecondModuleHashFunction());
 
-        //Create connection to remote Server; send BloomFilter
-        //TODO: change to remote binding for ec2
-        service = (BloomFilterService) Naming.lookup("rmi://localhost:3000/bloom");
-        System.out.println("Remote Server: " + service.createNewBloomFilter(slotCapacity, numberOfBloomfunctions));
 
-
-        //Test with some test-Employees ID's
-        //TODO fill in Bitset in Bloomfilter with inputs of client DB
-        bloomFilter.add(("10004").hashCode());
-        bloomFilter.add(("10005").hashCode());
-        bloomFilter.add(("20012").hashCode());
-
-        //send Bloomfilter, print out result
-        String gsonEmployees = service.sendBitset(bloomFilter.getBitSet());
-        Gson gson = new GsonBuilder().create();
-        ArrayList<Employee> employees = gson.fromJson(gsonEmployees, new TypeToken<ArrayList<Employee>>() {}.getType());
-
-        for (Employee emp: employees) {
-            emp.printOut();
+        //send by BloomFilter
+        for (Dept_Manager deptManager : deptManagers) {
+            bloomFilter.add(deptManager.getEmp_no().hashCode());
         }
 
-        printSizeOf(gsonEmployees);
+        //Test with some test-Employees ID's
+//        bloomFilter.add(("10004").hashCode());
+//        bloomFilter.add(("10005").hashCode());
+//        bloomFilter.add(("20012").hashCode());
+
+        //send Bloomfilter, print out result
+        sizeComparer.increaseBloomFilterJoinSize(RamUsageEstimator.sizeOf(bloomFilter.getBitSet()));
+        String gsonEmployees = service.sendBitset(bloomFilter.getBitSet());
+        sizeComparer.increaseBloomFilterJoinSize(RamUsageEstimator.sizeOf(gsonEmployees));
+        ArrayList<Employee> employees = gson.fromJson(gsonEmployees, new TypeToken<ArrayList<Employee>>() {
+        }.getType());
+
+        sizeComparer.calculateFalsePositives(employees.size());
+        sizeComparer.printStats();
+
 
         //TODO receive join and handle it --> get Size of Answer
 
+    }
+
+    /**
+     * Gets an ArrayList of all Dept_Managers stored in DB
+     *
+     * @return ArrayList, null if connection to DB failed;
+     */
+    private static ArrayList<Dept_Manager> getDeptManagerFromLocalDB() {
+        DBConnector connector = DBConnector.getUniqueInstance();
+        ArrayList<Dept_Manager> dept_maanagers = null;
+        try {
+            dept_maanagers = connector.getAllDeptManager();
+        } catch (SQLException e) {
+            System.out.println("Get Dept_manager from DB failed: " + e);
+        }
+        return dept_maanagers;
     }
 
     private static int checkSlotCapacity(String slotCapacityString) {
@@ -102,8 +146,5 @@ public class Client {
 
         return 0;
     }
-
-    private static void printSizeOf(String gsonEmployees) {
-
-    }
 }
+

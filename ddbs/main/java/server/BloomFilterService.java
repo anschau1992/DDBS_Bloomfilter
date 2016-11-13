@@ -1,5 +1,6 @@
 package server;
 
+import shared.Dept_Manager;
 import shared.Employee;
 
 import java.rmi.Remote;
@@ -17,4 +18,5 @@ import java.util.BitSet;
 public interface BloomFilterService extends Remote {
     String createNewBloomFilter(int slotSize, int numberOfHashFunctions) throws RemoteException;
     String sendBitset(BitSet bitset) throws RemoteException;
+    String sendDeptManagerClassic(String  gsonDeptManagers) throws RemoteException;
 }
