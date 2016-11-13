@@ -58,4 +58,13 @@ public class Employee {
     public void setHire_date(String hire_date) {
         this.hire_date = hire_date;
     }
+
+    /**
+     * Prints out employee's data
+     */
+    public void printOut() {
+        System.out.println("----------------------------");
+        System.out.println("Emp No: " + emp_no + "\t" + first_name + " " + last_name+"," + gender.toString());
+        System.out.println("Birth Date: " +birthdate + "\t Hire Date: " + hire_date);
+    }
 }

@@ -12,7 +12,7 @@ import java.util.BitSet;
  */
 public interface BloomFilterService extends Remote {
     String createNewBloomFilter(int slotSize, int numberOfHashfunctions) throws RemoteException;
-    ArrayList<Employee> receiveBitset(BitSet bitset) throws RemoteException;
+    String sendBitset(BitSet bitset) throws RemoteException;
     //TODO: add sentJoinedData back somehow
 
 }

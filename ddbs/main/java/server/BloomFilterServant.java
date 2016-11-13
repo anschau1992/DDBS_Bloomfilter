@@ -1,5 +1,7 @@
 package server;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import shared.BloomFilter;
 import shared.hashFunctions.SecondModuleHashFunction;
 import shared.hashFunctions.SimpleModuloHashFunction;
@@ -35,7 +37,7 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
         return "New Bloomfilter is set";
     }
 
-    public ArrayList<Employee> receiveBitset(BitSet bitset) {
+    public String sendBitset(BitSet bitset) {
         try {
             this.bloomFilter.readInBloomFilter(bitset);
         } catch (Exception e) {
@@ -54,7 +56,8 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
             idsInBLoomFilter = checkIDsinBloomfilter(employeeIds);
             ArrayList<Employee> returningEmployees =  getWholeEmployeeData(idsInBLoomFilter);
 
-            return returningEmployees;
+            Gson gson = new GsonBuilder().create();
+            return gson.toJson(returningEmployees);
 
         } catch (Exception e) {
             System.err.println("Join has been failed: " + e);

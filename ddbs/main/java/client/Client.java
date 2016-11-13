@@ -3,6 +3,9 @@ package client; /**
  */
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import shared.BloomFilter;
 import shared.hashFunctions.SecondModuleHashFunction;
 import shared.hashFunctions.SimpleModuloHashFunction;
@@ -34,32 +37,31 @@ public class Client {
             System.exit(0);
         }
 
-        //Setup shared.BloomFilter with given arguments
+        //Setup BloomFilter with given arguments
         BloomFilter bloomFilter = new BloomFilter(slotCapacity, numberOfBloomfunctions,
                 new SimpleModuloHashFunction(), new SecondModuleHashFunction());
 
-        //Create connection to remote Server; send Bloomfilter
+        //Create connection to remote Server; send BloomFilter
         //TODO: change to remote binding for ec2
         service = (BloomFilterService) Naming.lookup("rmi://localhost:3000/bloom");
         System.out.println("Remote Server: " + service.createNewBloomFilter(slotCapacity, numberOfBloomfunctions));
 
         //TODO fill in Bitset in Bloomfilter with inputs of client DB
-        //Test with some test-inputs
-
+        //Test with some test-Employees ID's
         bloomFilter.add(("10004").hashCode());
         bloomFilter.add(("10005").hashCode());
         bloomFilter.add(("20012").hashCode());
 
+        //send Bloomfilter, print out result
+        String gsonEmployees = service.sendBitset(bloomFilter.getBitSet());
+        Gson gson = new GsonBuilder().create();
+        ArrayList<Employee> employees = gson.fromJson(gsonEmployees, new TypeToken<ArrayList<Employee>>() {}.getType());
 
+        for (Employee emp: employees) {
+            emp.printOut();
+        }
 
-        //TODO send bitset to remote server
-        //test send
-        ArrayList<Employee> employees = service.receiveBitset(bloomFilter.getBitSet());
-        System.out.println(employees);
-
-
-
-        //TODO receive join and handle it --> print out result?
+        //TODO receive join and handle it --> get Size of Answer
 
     }
 
