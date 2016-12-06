@@ -10,9 +10,9 @@ package shared.hashFunctions;
  */
 public class SecondModuleHashFunction implements HashFunction {
 
-    public int hash(int value, int slotSize) {
+    public int hash(long value, int slotSize) {
         //absolute number is used to prevent the case of negative number
         //return slotSize - (value % slotSize);
-        return 3 - (value%3);
+        return (int) (3 - (value%3));
     }
 }

@@ -106,24 +106,6 @@ public class DBConnector {
     }
 
     /**
-     * Gets all the Dept_Managers form the DB as Dept_Managers Objects
-     * @return a ArrayList of Dept_Managers
-     * @throws SQLException if request on DB not successful
-     */
-    public ArrayList<Dept_Manager> getAllDeptManager() throws SQLException {
-        ArrayList<Dept_Manager> dept_managers = new ArrayList<Dept_Manager>();
-
-        String sqlQuery = "SELECT * FROM dept_manager";
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
-
-        ResultSet result = statement.executeQuery();
-        while(result.next()) {
-            dept_managers.add(createDBDeptManager(result));
-        }
-        return dept_managers;
-    }
-
-    /**
      * Copies all relevant data from a db-employee into a new created Employee-Object
      * @param result
      * @return employee new employee
@@ -141,6 +123,24 @@ public class DBConnector {
         return employee;
     }
 
+    /**
+     * Gets all the Dept_Managers form the DB as Dept_Managers Objects
+     * @return a ArrayList of Dept_Managers
+     * @throws SQLException if request on DB not successful
+     */
+    public ArrayList<Dept_Manager> getAllDeptManager() throws SQLException {
+        ArrayList<Dept_Manager> dept_managers = new ArrayList<Dept_Manager>();
+
+        String sqlQuery = "SELECT * FROM dept_manager";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+
+        ResultSet result = statement.executeQuery();
+        while(result.next()) {
+            dept_managers.add(createDBDeptManager(result));
+        }
+        return dept_managers;
+    }
+
     private Dept_Manager createDBDeptManager(ResultSet result) throws SQLException {
         Dept_Manager dept_manager = new Dept_Manager();
         dept_manager.setEmp_no(result.getString("emp_no"));
@@ -150,4 +150,8 @@ public class DBConnector {
 
         return dept_manager;
     }
+
+
+
+
 }

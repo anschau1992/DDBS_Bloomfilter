@@ -6,9 +6,11 @@ import com.google.gson.reflect.TypeToken;
 import shared.BloomFilter;
 import shared.Dept_Manager;
 import shared.JoinedEmployee;
+import shared.hashFunctions.HashFunction;
 import shared.hashFunctions.SecondModuleHashFunction;
 import shared.hashFunctions.SimpleModuloHashFunction;
 import shared.Employee;
+import shared.hashFunctions.UniversalHashFunction;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -36,8 +38,17 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
      * @return confirmation message
      */
     public String createNewBloomFilter(int slotSize, int numberOfHashFunctions) {
-        this.bloomFilter = new BloomFilter(slotSize, numberOfHashFunctions, new SimpleModuloHashFunction(), new SecondModuleHashFunction());
-        return "New Bloomfilter is set";
+        this.bloomFilter = new BloomFilter(slotSize, numberOfHashFunctions);
+        return "New Bloomfilter is set on remote";
+    }
+
+    public String sendHashFunctions(int[] aRandom, int[] bRandom) {
+        UniversalHashFunction[] universalHashFunctions = new UniversalHashFunction[aRandom.length];
+        for(int i = 0; i < aRandom.length; i++) {
+            universalHashFunctions[i] =  new UniversalHashFunction(aRandom[i], bRandom[i]);
+        }
+        this.bloomFilter.setHashFunctions(universalHashFunctions);
+        return "New Hashfunctions are set on remote";
     }
 
     /**

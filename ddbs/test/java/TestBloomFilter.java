@@ -29,7 +29,7 @@ public class TestBloomFilter {
         baseFunction1 = new SimpleModuloHashFunction();
         baseFunction2 = new SecondModuleHashFunction();
 
-        bloomFilter = new BloomFilter(slotCapacity, numberOfBloomFunctions, baseFunction1, baseFunction2);
+        bloomFilter = new BloomFilter(slotCapacity, numberOfBloomFunctions);
     }
 
     /**
@@ -81,7 +81,7 @@ public class TestBloomFilter {
         bloomFilter.add(37);
 
         //copy client to remote bloomFilter; add number, which should be overwritten afterwards
-        BloomFilter remoteBloomFilter = new BloomFilter(slotCapacity, numberOfBloomFunctions, baseFunction1, baseFunction2);
+        BloomFilter remoteBloomFilter = new BloomFilter(slotCapacity, numberOfBloomFunctions);
         remoteBloomFilter.add(14);
         assertTrue("Position 15 is true, before overwrite RemoteBloomFilter", remoteBloomFilter.checkSlot(15));
         assertTrue("Position 15 is true, before overwrite RemoteBloomFilter", remoteBloomFilter.checkSlot(16));

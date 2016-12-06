@@ -8,5 +8,5 @@ package shared.hashFunctions;
  * Interface for different hash functions
  */
 public  interface HashFunction {
-    public int hash (int value, int slotSize);
+    public int hash (long value, int slotSize);
 }

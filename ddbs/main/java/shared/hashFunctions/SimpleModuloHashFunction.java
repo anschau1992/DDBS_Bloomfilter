@@ -9,7 +9,7 @@ package shared.hashFunctions;
  */
 public class SimpleModuloHashFunction implements HashFunction {
 
-    public int hash(int value, int slotSize) {
-        return value % slotSize;
+    public int hash(long value, int slotSize) {
+        return (int) value % slotSize;
     }
 }

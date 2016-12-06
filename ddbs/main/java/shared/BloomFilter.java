@@ -2,7 +2,7 @@ package shared; /**
  * Created by Andy on 31.10.16.
  */
 
-import shared.hashFunctions.HashFunction;
+import shared.hashFunctions.UniversalHashFunction;
 
 import java.util.BitSet;
 
@@ -11,22 +11,22 @@ public class BloomFilter {
     final int slotCapacity;
     final int numberOfBloomFunctions;
 
-    final HashFunction baseFunction1;
-    final HashFunction baseFunction2;
+    private UniversalHashFunction[] hashFunctions;
 
     /**
      * Initialize the Bloomfilter
      * @param slotCapacity - the length of the bloom filter
      * @param numberOfBloomFunctions - the number of function used to hash a value
-     * @param baseFunction1 - base function 1  to build up the final bloom functions
-     * @param baseFunction2 - base function 2  to build up the final bloom functions
      */
-    public BloomFilter(int slotCapacity, int numberOfBloomFunctions, HashFunction baseFunction1, HashFunction baseFunction2) {
+    public BloomFilter(int slotCapacity, int numberOfBloomFunctions) {
         bitSet = new BitSet(slotCapacity);
-        this.baseFunction1 = baseFunction1;
-        this.baseFunction2 = baseFunction2;
         this.slotCapacity = slotCapacity;
         this.numberOfBloomFunctions = numberOfBloomFunctions;
+
+    }
+
+    public void setHashFunctions(UniversalHashFunction[] hashFunctions) {
+        this.hashFunctions = hashFunctions;
     }
 
     /**
@@ -35,7 +35,7 @@ public class BloomFilter {
      */
     public void add(int value){
         for(int i = 0; i < numberOfBloomFunctions; i++) {
-            int hashLocation = bloomFunction(value, i);
+            int hashLocation = hashFunctions[i].hash(value, slotCapacity);
             bitSet.set(hashLocation);
         }
     }
@@ -48,26 +48,13 @@ public class BloomFilter {
      */
     public boolean check(int value){
         for(int i = 0; i < numberOfBloomFunctions; i++) {
-            int hashLocation = bloomFunction(value, i);
+            int hashLocation = hashFunctions[i].hash(value, slotCapacity);
             //if BitSetLocation is not true
             if(!bitSet.get(hashLocation)) {
                 return false;
             }
         }
         return true;
-    }
-
-    /**
-     * Based on the base function 1 & 2 and the iteration number,
-     * calculating the position within the bloomfilter based on the function:
-     * hash i (x,m) = hash a (x) + (i+1) * hash b (x) % m
-     *
-     * @param value
-     * @param functionNumber
-     * @return
-     */
-    private int bloomFunction(int value, int functionNumber) {
-        return (baseFunction1.hash(value, slotCapacity) + (functionNumber+1) * baseFunction2.hash(value, slotCapacity)) % slotCapacity;
     }
 
     /**

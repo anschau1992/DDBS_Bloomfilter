@@ -7,14 +7,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import server.DBConnector;
-import shared.BloomFilter;
-import shared.Dept_Manager;
-import shared.JoinedEmployee;
+import shared.*;
 import shared.hashFunctions.SecondModuleHashFunction;
 import shared.hashFunctions.SimpleModuloHashFunction;
 import server.BloomFilterService;
-import shared.Employee;
 import com.carrotsearch.sizeof.*;
+import shared.hashFunctions.UniversalHashFunction;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -23,6 +21,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Client {
 
@@ -30,6 +29,10 @@ public class Client {
 
         int slotCapacity = 0;
         int numberOfBloomfunctions = 0;
+
+        int [] aRandom;
+        int [] bRandom;
+        UniversalHashFunction[] hashFunctions;
 
         //check arguments
         if (args.length == 2) {
@@ -40,59 +43,68 @@ public class Client {
             System.exit(0);
         }
 
+
+        hashFunctions = new UniversalHashFunction[numberOfBloomfunctions];
+        aRandom = new int[numberOfBloomfunctions];
+        bRandom = new int[numberOfBloomfunctions];
+
+        for (int i=0; i< numberOfBloomfunctions; i++) {
+            aRandom[i] = ThreadLocalRandom.current().nextInt(1, CONSTANTS.NEXT_PRIME);
+            bRandom[i] = ThreadLocalRandom.current().nextInt(0, CONSTANTS.NEXT_PRIME);
+            hashFunctions[i] = new UniversalHashFunction(aRandom[i], bRandom[i]);
+        }
+
         BloomFilterService service;
         SizeComparer sizeComparer = new SizeComparer();
 
 
+
         //Create connection to remote Server
-        //TODO: change to remote binding for ec2
         service = (BloomFilterService) Naming.lookup("rmi://localhost:3000/bloom");
 
         //Get Dept_Manager of Local DB
         ArrayList<Dept_Manager> deptManagers = getDeptManagerFromLocalDB();
 
-        //Send dept managers classicly for join
-        Gson gson = new GsonBuilder().create();
-        String gsonDeptManagers = gson.toJson(deptManagers);
-        sizeComparer.increaseClassicJoinSize(RamUsageEstimator.sizeOf(gsonDeptManagers));
-
-        String gsonJoinedEmployees = service.sendDeptManagerClassic(gsonDeptManagers);
-        sizeComparer.increaseClassicJoinSize(RamUsageEstimator.sizeOf(gsonJoinedEmployees));
-
-        ArrayList<JoinedEmployee> joinedEmployees = gson.fromJson(gsonJoinedEmployees, new TypeToken<ArrayList<JoinedEmployee>>() {
-        }.getType());
-        sizeComparer.setNumberOfJoins(joinedEmployees.size());
-
-
-
         //Setup BloomFilter with given arguments on Client & Server
         System.out.println("Remote Server: " + service.createNewBloomFilter(slotCapacity, numberOfBloomfunctions));
-        BloomFilter bloomFilter = new BloomFilter(slotCapacity, numberOfBloomfunctions,
-                new SimpleModuloHashFunction(), new SecondModuleHashFunction());
+        BloomFilter bloomFilter = new BloomFilter(slotCapacity, numberOfBloomfunctions);
 
+        //generate UniversalHashFunction with random a & b and set it locally and remotely
 
-        //send by BloomFilter
-        for (Dept_Manager deptManager : deptManagers) {
-            bloomFilter.add(deptManager.getEmp_no().hashCode());
-        }
+        bloomFilter.setHashFunctions(hashFunctions);
+        System.out.println("Remote Server: " + service.sendHashFunctions(aRandom, bRandom));
 
-        //Test with some test-Employees ID's
-//        bloomFilter.add(("10004").hashCode());
-//        bloomFilter.add(("10005").hashCode());
-//        bloomFilter.add(("20012").hashCode());
+        bloomFilter.add(345);
+        bloomFilter.displayHashTable();
 
-        //send Bloomfilter, print out result
-        sizeComparer.increaseBloomFilterJoinSize(RamUsageEstimator.sizeOf(bloomFilter.getBitSet()));
-        String gsonEmployees = service.sendBitset(bloomFilter.getBitSet());
-        sizeComparer.increaseBloomFilterJoinSize(RamUsageEstimator.sizeOf(gsonEmployees));
-        ArrayList<Employee> employees = gson.fromJson(gsonEmployees, new TypeToken<ArrayList<Employee>>() {
-        }.getType());
-
-        sizeComparer.calculateFalsePositives(employees.size());
-        sizeComparer.printStats();
-
-
-        //TODO receive join and handle it --> get Size of Answer
+//        //Send dept managers classicly for join
+//        Gson gson = new GsonBuilder().create();
+//        String gsonDeptManagers = gson.toJson(deptManagers);
+//        sizeComparer.increaseClassicJoinSize(RamUsageEstimator.sizeOf(gsonDeptManagers));
+//
+//        String gsonJoinedEmployees = service.sendDeptManagerClassic(gsonDeptManagers);
+//        sizeComparer.increaseClassicJoinSize(RamUsageEstimator.sizeOf(gsonJoinedEmployees));
+//
+//        ArrayList<JoinedEmployee> joinedEmployees = gson.fromJson(gsonJoinedEmployees, new TypeToken<ArrayList<JoinedEmployee>>() {
+//        }.getType());
+//        sizeComparer.setNumberOfJoins(joinedEmployees.size());
+//
+//
+//        //send by BloomFilter
+//        for (Dept_Manager deptManager : deptManagers) {
+//            bloomFilter.add(Integer.parseInt(deptManager.getEmp_no()));
+//        }
+//
+//
+//        //send Bloomfilter, print out result
+//        sizeComparer.increaseBloomFilterJoinSize(RamUsageEstimator.sizeOf(bloomFilter.getBitSet()));
+//        String gsonEmployees = service.sendBitset(bloomFilter.getBitSet());
+//        sizeComparer.increaseBloomFilterJoinSize(RamUsageEstimator.sizeOf(gsonEmployees));
+//        ArrayList<Employee> employees = gson.fromJson(gsonEmployees, new TypeToken<ArrayList<Employee>>() {
+//        }.getType());
+//
+//        sizeComparer.calculateFalsePositives(employees.size());
+//        sizeComparer.printStats();
 
     }
 
