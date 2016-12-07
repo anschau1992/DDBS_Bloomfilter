@@ -14,8 +14,15 @@ public class ApplicationServer {
      * @throws RemoteException
      */
     public static void main(String[] args) throws RemoteException {
-        Registry registry = LocateRegistry.createRegistry(3000);
-        registry.rebind("bloom", new BloomFilterServant());
-        System.out.println("Server Application is set up");
+        try {
+            int portNumber = Integer.parseInt(args[0]);
+            Registry registry = LocateRegistry.createRegistry(portNumber);
+            registry.rebind("bloom", new BloomFilterServant());
+            System.out.println("Server Application is set up on port: " + portNumber);
+
+        }catch (Exception e) {
+            System.out.println("First argument has to be an integer for local port");
+            System.exit(-1);
+        }
     }
 }

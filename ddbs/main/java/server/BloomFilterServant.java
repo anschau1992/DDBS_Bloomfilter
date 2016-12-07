@@ -4,12 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import shared.BloomFilter;
-import shared.Dept_Manager;
+import shared.db_projection.Dept_Manager;
 import shared.JoinedEmployee;
-import shared.hashFunctions.HashFunction;
-import shared.hashFunctions.SecondModuleHashFunction;
-import shared.hashFunctions.SimpleModuloHashFunction;
-import shared.Employee;
+import shared.db_projection.Employee;
+import shared.db_projection.Salary;
 import shared.hashFunctions.UniversalHashFunction;
 
 import java.rmi.RemoteException;
@@ -23,8 +21,13 @@ import java.util.BitSet;
  */
 public class BloomFilterServant extends UnicastRemoteObject implements BloomFilterService {
     private BloomFilter bloomFilter;
-    DBConnector connector;
+    DBConnector connector = DBConnector.getUniqueInstance();
+    Gson gson = new GsonBuilder().create();
 
+    //all the Employees from the last call of getEmployeesByNameBitSet
+    ArrayList<Employee> lastEmployeeProjection;
+    //all the Employees from the last call of getEmployeesByNameBitSet
+    ArrayList<Salary> lastSalaryProjection;
 
     public BloomFilterServant() throws RemoteException{
         super();
@@ -39,7 +42,8 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
      */
     public String createNewBloomFilter(int slotSize, int numberOfHashFunctions) {
         this.bloomFilter = new BloomFilter(slotSize, numberOfHashFunctions);
-        return "New Bloomfilter is set on remote";
+        System.out.println("New Bloomfilter is set on Server");
+        return "New Bloomfilter is set on Server";
     }
 
     public String sendHashFunctions(int[] aRandom, int[] bRandom) {
@@ -66,8 +70,6 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
             return null;
         }
 
-        //Connect to the database and get the corresponding row with the bloom-filter
-        connector = DBConnector.getUniqueInstance();
         ArrayList <String> idsInBLoomFilter;
         try {
             //all ID's of DB
@@ -128,6 +130,82 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
         return gson.toJson(joinedEmployees);
     }
 
+    /**
+     * Gets all the employees from the DB where firstname is same as the param
+     * and returns them as Employees Object in GSON-Format
+     * @param name
+     * @return
+     * @throws RemoteException
+     */
+    public String getEmployeesByName(String name) throws RemoteException {
+        try {
+            ArrayList<Employee> employees = connector.getEmployeesByFirstName(name);
+
+            System.out.println("Server is returning Employees with name " + name + " as Employees Object");
+            return gson.toJson(employees);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return e.toString();
+        }
+    }
+
+    /**
+     * Get all the employess from the DB, but send it as Bitset to the Client
+     */
+    public BitSet getEmployeesByNameBitSet(String name) throws RemoteException {
+        try {
+            ArrayList<Employee> employees = connector.getEmployeesByFirstName(name);
+
+            //fill in Bitset with emp_no
+            for (Employee emp: employees) {
+                bloomFilter.add(Integer.parseInt(emp.getEmp_no()));
+            }
+            System.out.println("Server is returning Employees with name " + name + " as BitSet");
+            return bloomFilter.getBitSet();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Gets all the salaries from the DB where amount of salary is higher than the param
+     * @param minSalary
+     * @return salary-Objects
+     * @throws RemoteException
+     */
+    public String getSalaryHigherAs(int minSalary) throws RemoteException {
+        try {
+            ArrayList<Salary> salaries = connector.getSalariesHigherThan(minSalary);
+
+            System.out.println("Server is returning salaries > " + minSalary + " as Salary-Objects");
+            return gson.toJson(salaries);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return e.toString();
+        }
+    }
+
+    public BitSet getSalaryHigherAsBitSet(int minSalary) throws RemoteException {
+        try {
+            ArrayList<Salary> salaries = connector.getSalariesHigherThan(minSalary);
+
+            for (Salary sal: salaries) {
+                bloomFilter.add(Integer.parseInt(sal.getEmp_no()));
+            }
+
+            System.out.println("Server is returning salaries > " + minSalary + "as BitSet");
+            return bloomFilter.getBitSet();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private ArrayList<JoinedEmployee> joinDeptManagersWithEmployees(ArrayList <Dept_Manager> deptManagers) throws SQLException {
         connector = DBConnector.getUniqueInstance();
         ArrayList<JoinedEmployee>joinedEmployees= new ArrayList<JoinedEmployee>();
@@ -157,6 +235,8 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
 
         return joinedEmployee;
     }
+
+
 
 
 }

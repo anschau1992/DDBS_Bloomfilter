@@ -1,8 +1,10 @@
-package shared;
+package shared.db_projection;
 
 /**
  * Created by Andy on 10.11.16.
  */
+
+import shared.Gender;
 
 /**
  * A class representing exactly the employees-table of the DB: https://github.com/datacharmer/test_db

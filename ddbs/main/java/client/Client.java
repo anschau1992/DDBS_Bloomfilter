@@ -8,10 +8,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import server.DBConnector;
 import shared.*;
-import shared.hashFunctions.SecondModuleHashFunction;
-import shared.hashFunctions.SimpleModuloHashFunction;
+import shared.db_projection.Dept_Manager;
 import server.BloomFilterService;
-import com.carrotsearch.sizeof.*;
+import shared.db_projection.Employee;
+import shared.db_projection.Salary;
 import shared.hashFunctions.UniversalHashFunction;
 
 import java.net.MalformedURLException;
@@ -20,63 +20,65 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.InputMismatchException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Client {
 
     public static void main(String[] args) throws RemoteException, NotBoundException, MalformedURLException {
+        //check argument and exit if not correct
+        checkArguments(args);
 
-        int slotCapacity = 0;
-        int numberOfBloomfunctions = 0;
+        NodeStarter nodeStarter = new NodeStarter(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 
-        int [] aRandom;
-        int [] bRandom;
-        UniversalHashFunction[] hashFunctions;
-
-        //check arguments
-        if (args.length == 2) {
-            slotCapacity = checkSlotCapacity(args[0]);
-            numberOfBloomfunctions = checkBloomfunctionsNumberCapacity(args[1]);
-        } else {
-            System.out.println("The lenght of the arguments must be 2: (1) slotCapacity, (2) number of Bloomfunctions");
-            System.exit(0);
-        }
+        //Setup localBloomfilter
+        BloomFilter localBloom = nodeStarter.setupLocalBloomfilter();
+        //Setup service to end-nodes
+        BloomFilterService service1 = nodeStarter.setRemoteService(CONSTANTS.PORT1);
+        BloomFilterService service2 = nodeStarter.setRemoteService(CONSTANTS.PORT2);
 
 
-        hashFunctions = new UniversalHashFunction[numberOfBloomfunctions];
-        aRandom = new int[numberOfBloomfunctions];
-        bRandom = new int[numberOfBloomfunctions];
-
-        for (int i=0; i< numberOfBloomfunctions; i++) {
-            aRandom[i] = ThreadLocalRandom.current().nextInt(1, CONSTANTS.NEXT_PRIME);
-            bRandom[i] = ThreadLocalRandom.current().nextInt(0, CONSTANTS.NEXT_PRIME);
-            hashFunctions[i] = new UniversalHashFunction(aRandom[i], bRandom[i]);
-        }
-
-        BloomFilterService service;
-        SizeComparer sizeComparer = new SizeComparer();
+        Gson gson = new GsonBuilder().create();
 
 
 
-        //Create connection to remote Server
-        service = (BloomFilterService) Naming.lookup("rmi://localhost:3000/bloom");
+        //Test [1] send BitSet
+        BitSet bitSet1 = service1.getEmployeesByNameBitSet("Mary");
+        BitSet bitSet2 = service2.getSalaryHigherAsBitSet(155000);
+        System.out.println("Bitset1 : size= "+ bitSet1.size() +"\t" + bitSet1.toString());
+        System.out.println("Bitset2 : size= "+ bitSet2.size() +"\t" + bitSet2.toString());
 
-        //Get Dept_Manager of Local DB
-        ArrayList<Dept_Manager> deptManagers = getDeptManagerFromLocalDB();
 
-        //Setup BloomFilter with given arguments on Client & Server
-        System.out.println("Remote Server: " + service.createNewBloomFilter(slotCapacity, numberOfBloomfunctions));
-        BloomFilter bloomFilter = new BloomFilter(slotCapacity, numberOfBloomfunctions);
 
-        //generate UniversalHashFunction with random a & b and set it locally and remotely
 
-        bloomFilter.setHashFunctions(hashFunctions);
-        System.out.println("Remote Server: " + service.sendHashFunctions(aRandom, bRandom));
+        //TODO old code: remove at the end
 
-        bloomFilter.add(345);
-        bloomFilter.displayHashTable();
+        //        //Testing: print out 'Mary's from node1
+//        String gsonEmployees = service1.getEmployeesByName("Mary");
+//        ArrayList<Employee> employees = gson.fromJson(gsonEmployees,
+//                new TypeToken<ArrayList<Employee>>() {}.getType());
+//        for (Employee emp: employees) {
+//            emp.printOut();
+//        }
+//
+//        //Testing: get all Salaries from node2
+//        String gsonSalaries = service2.getSalaryHigherAs(150000);
+//        ArrayList<Salary> salaries = gson.fromJson(gsonSalaries,
+//                new TypeToken<ArrayList<Salary>>() {}.getType());
+//        for (Salary sal: salaries) {
+//            sal.printOut();
+//        }
 
+
+
+
+        //TODO old code: remove at the end
+
+        //bloomFilter.add(345);
+        //bloomFilter.displayHashTable();
+
+//        SizeComparer sizeComparer = new SizeComparer();
 //        //Send dept managers classicly for join
 //        Gson gson = new GsonBuilder().create();
 //        String gsonDeptManagers = gson.toJson(deptManagers);
@@ -124,7 +126,19 @@ public class Client {
         return dept_maanagers;
     }
 
-    private static int checkSlotCapacity(String slotCapacityString) {
+
+    private static void checkArguments(String[] args) {
+        //check arguments
+        if (args.length == 2) {
+            checkSlotCapacity(args[0]);
+            checkBloomfunctionsNumberCapacity(args[1]);
+        } else {
+            System.out.println("The lenght of the arguments must be 2: (1) slotCapacity, (2) number of Bloomfunctions");
+            System.exit(0);
+        }
+    }
+
+    private static void checkSlotCapacity(String slotCapacityString) {
         int slotCapacity;
         try {
             slotCapacity = Integer.parseInt(slotCapacityString);
@@ -132,16 +146,13 @@ public class Client {
                 System.out.println("First Argument (Slotcapacity) must be >0");
                 System.exit(0);
             }
-            return slotCapacity;
-
         } catch (InputMismatchException e) {
             System.out.println("You did not enter a integer as first argument");
             System.exit(0);
         }
-        return 0;
     }
 
-    private static int checkBloomfunctionsNumberCapacity(String numberOfBloomfunctionsString) {
+    private static void checkBloomfunctionsNumberCapacity(String numberOfBloomfunctionsString) {
         int numberOfBloomfunctions;
         try {
             numberOfBloomfunctions = Integer.parseInt(numberOfBloomfunctionsString);
@@ -149,14 +160,10 @@ public class Client {
                 System.out.println("Second Argument (NumberOfBloomfunctions) must be >0");
                 System.exit(0);
             }
-            return numberOfBloomfunctions;
-
         } catch (InputMismatchException e) {
             System.out.println("You did not enter a integer as second argument");
             System.exit(0);
         }
-
-        return 0;
     }
 }
 

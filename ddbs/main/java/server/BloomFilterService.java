@@ -1,12 +1,7 @@
 package server;
 
-import shared.Dept_Manager;
-import shared.Employee;
-import shared.hashFunctions.UniversalHashFunction;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.BitSet;
 
 /**
@@ -21,4 +16,9 @@ public interface BloomFilterService extends Remote {
     String sendHashFunctions(int[] aRandom, int[] bRandom) throws RemoteException;
     String sendBitset(BitSet bitset) throws RemoteException;
     String sendDeptManagerClassic(String  gsonDeptManagers) throws RemoteException;
+
+    String getEmployeesByName(String name) throws RemoteException;
+    BitSet getEmployeesByNameBitSet(String name) throws RemoteException;
+    String getSalaryHigherAs(int minSalary) throws RemoteException;
+    BitSet getSalaryHigherAsBitSet(int minSalary) throws RemoteException;
 }

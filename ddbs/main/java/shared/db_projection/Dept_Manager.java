@@ -1,4 +1,4 @@
-package shared;
+package shared.db_projection;
 
 /**
  * Created by Andy on 13.11.16.

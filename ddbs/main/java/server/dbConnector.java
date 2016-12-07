@@ -1,8 +1,9 @@
 package server;
 
-import shared.Dept_Manager;
-import shared.Employee;
+import shared.db_projection.Dept_Manager;
+import shared.db_projection.Employee;
 import shared.Gender;
+import shared.db_projection.Salary;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -64,13 +65,13 @@ public class DBConnector {
 
         ResultSet result = statement.executeQuery();
 
-        ArrayList<Employee> array = new ArrayList<Employee>();
+        ArrayList<Employee> employees = new ArrayList<Employee>();
 
         while (result.next()) {
-            array.add(createDBEmployee(result));
+            employees.add(createDBEmployee(result));
         }
 
-        return array;
+        return employees;
     }
 
 
@@ -151,7 +152,34 @@ public class DBConnector {
         return dept_manager;
     }
 
+    /**
+     * Get all the Salaries from the DB as Salaries object,
+     * where salary-amount is higher than the given salary
+     * @param salary as the lower bound
+     * @return all Salaries higher than the given param
+     * @throws SQLException
+     */
+    public ArrayList<Salary> getSalariesHigherThan(int salary) throws SQLException {
+        ArrayList<Salary> salaries = new ArrayList<Salary>();
 
+        String sqlQuery = "SELECT * FROM salaries WHERE salary >'" + salary + "'";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
 
+        ResultSet result = statement.executeQuery();
+        while(result.next()) {
+            salaries.add(createSalaries(result));
+        }
 
+        return salaries;
+    }
+
+    private Salary createSalaries(ResultSet result) throws SQLException {
+        Salary salary = new Salary();
+        salary.setSalary(Integer.parseInt(result.getString("salary")));
+        salary.setEmp_no(result.getString("emp_no"));
+        salary.setFrom_date(result.getString("from_date"));
+        salary.setTo_date(result.getString("to_date"));
+
+        return salary;
+    }
 }
