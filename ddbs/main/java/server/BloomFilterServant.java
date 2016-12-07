@@ -24,9 +24,9 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
     DBConnector connector = DBConnector.getUniqueInstance();
     Gson gson = new GsonBuilder().create();
 
-    //all the Employees from the last call of getEmployeesByNameBitSet
+    //all the Employees from the last call of getBitSetEmployeesByName
     ArrayList<Employee> lastEmployeeProjection;
-    //all the Employees from the last call of getEmployeesByNameBitSet
+    //all the Employees from the last call of getBitSetEmployeesByName
     ArrayList<Salary> lastSalaryProjection;
 
     public BloomFilterServant() throws RemoteException{
@@ -151,14 +151,18 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
     }
 
     /**
-     * Get all the employess from the DB, but send it as Bitset to the Client
+     * Gets all the employees from the DB where firstname is same as the param,
+     * but send them back as a Bitset
+     * @param name
+     * @return Bitset filled with the employees matching
+     * @throws RemoteException
      */
-    public BitSet getEmployeesByNameBitSet(String name) throws RemoteException {
+    public BitSet getBitSetEmployeesByName(String name) throws RemoteException {
         try {
-            ArrayList<Employee> employees = connector.getEmployeesByFirstName(name);
+            lastEmployeeProjection = connector.getEmployeesByFirstName(name);
 
             //fill in Bitset with emp_no
-            for (Employee emp: employees) {
+            for (Employee emp: lastEmployeeProjection) {
                 bloomFilter.add(Integer.parseInt(emp.getEmp_no()));
             }
             System.out.println("Server is returning Employees with name " + name + " as BitSet");
@@ -189,11 +193,18 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
         }
     }
 
-    public BitSet getSalaryHigherAsBitSet(int minSalary) throws RemoteException {
+    /**
+     * Get all the salaries from the DB where amount of salary is higher than the param,
+     * but sends them back as a Bitset
+     * @param minSalary
+     * @return Bitset filled with the salaries matching
+     * @throws RemoteException
+     */
+    public BitSet getBitSetSalaryHigherAs(int minSalary) throws RemoteException {
         try {
-            ArrayList<Salary> salaries = connector.getSalariesHigherThan(minSalary);
+            lastSalaryProjection = connector.getSalariesHigherThan(minSalary);
 
-            for (Salary sal: salaries) {
+            for (Salary sal: lastSalaryProjection) {
                 bloomFilter.add(Integer.parseInt(sal.getEmp_no()));
             }
 
@@ -202,6 +213,53 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Evaluates matches with the given Bitset in the projection of employees
+     * and sends them back to the client
+     * @param bitSet
+     * @return
+     * @throws RemoteException
+     */
+    public String getEmployeesMatching(BitSet bitSet) throws RemoteException {
+        ArrayList<Employee> matchingEmployees = new ArrayList<Employee>();
+        try {
+            this.bloomFilter.readInBloomFilter(bitSet);
+
+            // evaluate all matches
+            for (Employee emp: lastEmployeeProjection) {
+                int emp_no = Integer.parseInt(emp.getEmp_no());
+                if(bloomFilter.check(emp_no)) {
+                    matchingEmployees.add(emp);
+                }
+            }
+            return gson.toJson(matchingEmployees);
+
+        } catch (Exception e) {
+            System.out.println("EmployeesMatching: Bitset-Size is not matching, " + e);
+            return null;
+        }
+    }
+
+    public String getSalariesMatching(BitSet bitSet) throws RemoteException {
+        ArrayList<Salary> matchingSalaries = new ArrayList<Salary>();
+        try {
+            this.bloomFilter.readInBloomFilter(bitSet);
+
+            // evaluate all matches
+            for (Salary sal: lastSalaryProjection) {
+                int emp_no = Integer.parseInt(sal.getEmp_no());
+                if(bloomFilter.check(emp_no)) {
+                    matchingSalaries.add(sal);
+                }
+            }
+            return gson.toJson(matchingSalaries);
+
+        } catch (Exception e) {
+            System.out.println("SalariesMatching: Bitset-Size is not matching, " + e);
             return null;
         }
     }

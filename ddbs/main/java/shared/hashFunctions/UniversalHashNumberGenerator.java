@@ -4,7 +4,7 @@ package shared.hashFunctions;
  * Created by Andy on 07.12.16.
  */
 
-import shared.CONSTANTS;
+import shared.Constants;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -24,8 +24,8 @@ public class UniversalHashNumberGenerator {
 
     private void generateNumbers(int numberOfBloomfunctions) {
         for (int i=0; i< numberOfBloomfunctions; i++) {
-            aRandom[i] = ThreadLocalRandom.current().nextInt(1, CONSTANTS.NEXT_PRIME);
-            bRandom[i] = ThreadLocalRandom.current().nextInt(0, CONSTANTS.NEXT_PRIME);
+            aRandom[i] = ThreadLocalRandom.current().nextInt(1, Constants.NEXT_PRIME);
+            bRandom[i] = ThreadLocalRandom.current().nextInt(0, Constants.NEXT_PRIME);
         }
     }
 

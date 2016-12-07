@@ -18,7 +18,10 @@ public interface BloomFilterService extends Remote {
     String sendDeptManagerClassic(String  gsonDeptManagers) throws RemoteException;
 
     String getEmployeesByName(String name) throws RemoteException;
-    BitSet getEmployeesByNameBitSet(String name) throws RemoteException;
+    BitSet getBitSetEmployeesByName(String name) throws RemoteException;
     String getSalaryHigherAs(int minSalary) throws RemoteException;
-    BitSet getSalaryHigherAsBitSet(int minSalary) throws RemoteException;
+    BitSet getBitSetSalaryHigherAs(int minSalary) throws RemoteException;
+
+    String getEmployeesMatching(BitSet bitSet) throws RemoteException;
+    String getSalariesMatching(BitSet bitSet) throws RemoteException;
 }

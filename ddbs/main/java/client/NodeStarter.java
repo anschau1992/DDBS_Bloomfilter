@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.BitSet;
 
 /**
  * Created by Andy on 07.12.16.
@@ -56,4 +57,5 @@ public class NodeStarter {
 
         return service;
     }
+
 }

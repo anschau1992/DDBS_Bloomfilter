@@ -1,8 +1,7 @@
 package shared.hashFunctions;
 
-import shared.CONSTANTS;
+import shared.Constants;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -31,7 +30,7 @@ public class UniversalHashFunction implements HashFunction {
     public UniversalHashFunction (int a, int b) {
         this.a = a;
         this.b = b;
-        this.primeNumber = CONSTANTS.NEXT_PRIME;
+        this.primeNumber = Constants.NEXT_PRIME;
     }
 
     public int hash(long value, int slotSize) {

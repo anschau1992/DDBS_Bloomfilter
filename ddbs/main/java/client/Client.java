@@ -11,18 +11,16 @@ import shared.*;
 import shared.db_projection.Dept_Manager;
 import server.BloomFilterService;
 import shared.db_projection.Employee;
+import shared.db_projection.EmployeeAndSalaries;
 import shared.db_projection.Salary;
-import shared.hashFunctions.UniversalHashFunction;
 
 import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.InputMismatchException;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Client {
 
@@ -32,22 +30,48 @@ public class Client {
 
         NodeStarter nodeStarter = new NodeStarter(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 
-        //Setup localBloomfilter
+        // [0] Setup localBloomfilter
         BloomFilter localBloom = nodeStarter.setupLocalBloomfilter();
-        //Setup service to end-nodes
-        BloomFilterService service1 = nodeStarter.setRemoteService(CONSTANTS.PORT1);
-        BloomFilterService service2 = nodeStarter.setRemoteService(CONSTANTS.PORT2);
-
+        // [0] Setup service to end-nodes
+        BloomFilterService service1 = nodeStarter.setRemoteService(Constants.PORT1);
+        BloomFilterService service2 = nodeStarter.setRemoteService(Constants.PORT2);
 
         Gson gson = new GsonBuilder().create();
 
 
 
-        //Test [1] send BitSet
-        BitSet bitSet1 = service1.getEmployeesByNameBitSet("Mary");
-        BitSet bitSet2 = service2.getSalaryHigherAsBitSet(155000);
+        // [1] Get projections from remote nodes
+        BitSet bitSet1 = service1.getBitSetEmployeesByName("Tokuyasu");
+        BitSet bitSet2 = service2.getBitSetSalaryHigherAs(155000);
         System.out.println("Bitset1 : size= "+ bitSet1.size() +"\t" + bitSet1.toString());
         System.out.println("Bitset2 : size= "+ bitSet2.size() +"\t" + bitSet2.toString());
+
+        // [2] Intersection with a logical AND-Operator
+        bitSet1.and(bitSet2);
+        System.out.println("Intersected : size= "+ bitSet1.size() +"\t" + bitSet1.toString());
+
+        // [3] Send Intersection to nodes
+
+        String gsonMatchingEmpl = service1.getEmployeesMatching(bitSet1);
+        String gsonMatchingSal = service2.getSalariesMatching(bitSet1);
+
+        // [4] read in matches of nodes
+        ArrayList<Employee> matchingEmpl = gson.fromJson(gsonMatchingEmpl,
+                new TypeToken<ArrayList<Employee>>() {}.getType());
+        ArrayList<Salary> matchingSal = gson.fromJson(gsonMatchingSal,
+                new TypeToken<ArrayList<Salary>>() {}.getType());
+
+        // [5] final join and check for False Positives
+        ArrayList<EmployeeAndSalaries> combinedEmployees= new ArrayList<EmployeeAndSalaries>();
+        for (Employee emp: matchingEmpl) {
+            for (Salary sal : matchingSal) {
+                if(emp.getEmp_no().equals(sal.getEmp_no())) {
+                    EmployeeAndSalaries match = new EmployeeAndSalaries(emp, sal);
+                    match.printOut();
+                    combinedEmployees.add(match);
+                }
+            }
+        }
 
 
 
