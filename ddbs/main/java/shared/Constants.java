@@ -13,4 +13,8 @@ public final class Constants {
     //node port numbers
     public static final int PORT1 = 3000;
     public static final int PORT2 = 3001;
+
+
+    public static final String searchName = "Xiahua";
+    public static final int minSalary = 100000;
 }

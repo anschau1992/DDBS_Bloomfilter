@@ -74,6 +74,28 @@ public class DBConnector {
         return employees;
     }
 
+    /**
+     * Get all the employeeIds from DB having the exact same name as the given String parameter
+     * @param firstName of the searched employees
+     *                   a Array of emp_no as Integer
+     * @return null if failing
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getEmployeeIdsByFirstName (String firstName) throws SQLException {
+        String sqlQuery = "SELECT * FROM employees " +
+                "WHERE first_name = '" + firstName + "'";
+
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+
+        ResultSet result = statement.executeQuery();
+        ArrayList<Integer> employeeIds = new ArrayList<Integer>();
+
+        while (result.next()) {
+            employeeIds.add(Integer.parseInt(result.getString("emp_no")));
+        }
+        return employeeIds;
+    }
+
 
     public Employee getEmployeeByID (String id) throws SQLException {
         String sqlQuery = "SELECT * FROM employees " +
@@ -167,13 +189,13 @@ public class DBConnector {
 
         ResultSet result = statement.executeQuery();
         while(result.next()) {
-            salaries.add(createSalaries(result));
+            salaries.add(createSalary(result));
         }
 
         return salaries;
     }
 
-    private Salary createSalaries(ResultSet result) throws SQLException {
+    private Salary createSalary(ResultSet result) throws SQLException {
         Salary salary = new Salary();
         salary.setSalary(Integer.parseInt(result.getString("salary")));
         salary.setEmp_no(result.getString("emp_no"));
@@ -181,5 +203,31 @@ public class DBConnector {
         salary.setTo_date(result.getString("to_date"));
 
         return salary;
+    }
+
+    public ArrayList<Integer> getSalaryIDHigherThan(int salary) throws SQLException {
+        ArrayList<Integer> emp_nos = new ArrayList<Integer>();
+
+        String sqlQuery = "SELECT * FROM salaries WHERE salary >'" + salary + "'";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+
+        ResultSet result = statement.executeQuery();
+        while(result.next()) {
+            emp_nos.add(Integer.parseInt(result.getString("emp_no")));
+        }
+
+        return emp_nos;
+    }
+
+    public Salary getSalaryByID (String id) throws SQLException {
+        String sqlQuery = "SELECT * FROM salaries " +
+                "WHERE emp_no = '" + id + "'";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+
+        ResultSet result = statement.executeQuery();
+        while (result.next()) {
+            return createSalary(result);
+        }
+        return null;
     }
 }

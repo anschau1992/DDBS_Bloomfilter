@@ -45,8 +45,13 @@ public class SizeComparer {
     }
 
     public void calculateFalsePositives(int numberOfReturns) {
-        this.falsePositives = numberOfReturns - numberOfJoins;
+        this.falsePositives = numberOfReturns - numberOfJoins*2;
     }
+
+    public void increaseFalsePositives(int amount) {
+        falsePositives += amount;
+    }
+
 
     public void printStats() {
         calculateTotalSizes();

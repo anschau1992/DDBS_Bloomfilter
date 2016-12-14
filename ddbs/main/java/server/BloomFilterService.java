@@ -17,11 +17,14 @@ public interface BloomFilterService extends Remote {
     String sendBitset(BitSet bitset) throws RemoteException;
     String sendDeptManagerClassic(String  gsonDeptManagers) throws RemoteException;
 
-    String getEmployeesByName(String name) throws RemoteException;
+    String getEmployeesIDByName(String name) throws RemoteException;
     BitSet getBitSetEmployeesByName(String name) throws RemoteException;
-    String getSalaryHigherAs(int minSalary) throws RemoteException;
+    String getSalaryIdsHigherAs(int minSalary) throws RemoteException;
     BitSet getBitSetSalaryHigherAs(int minSalary) throws RemoteException;
 
     String getEmployeesMatching(BitSet bitSet) throws RemoteException;
     String getSalariesMatching(BitSet bitSet) throws RemoteException;
+
+    String getEmployeesMatchingId(String gsonIds) throws RemoteException;
+    String getSalariesMatchingId(String gsonIds) throws RemoteException;
 }

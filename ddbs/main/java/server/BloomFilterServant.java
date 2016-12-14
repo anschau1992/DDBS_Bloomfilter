@@ -131,18 +131,18 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
     }
 
     /**
-     * Gets all the employees from the DB where firstname is same as the param
-     * and returns them as Employees Object in GSON-Format
+     * Gets all the ID's from employees of the DB where firstname is same as the param
+     * and returns them as Integer-ArrayList in GSON-Format
      * @param name
      * @return
      * @throws RemoteException
      */
-    public String getEmployeesByName(String name) throws RemoteException {
+    public String getEmployeesIDByName(String name) throws RemoteException {
         try {
-            ArrayList<Employee> employees = connector.getEmployeesByFirstName(name);
+            ArrayList<Integer> employeesID = connector.getEmployeeIdsByFirstName(name);
 
-            System.out.println("Server is returning Employees with name " + name + " as Employees Object");
-            return gson.toJson(employees);
+            System.out.println("Server is returning Employee-ID's with name " + name + " as Integer-ArrayList");
+            return gson.toJson(employeesID);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -175,17 +175,17 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
     }
 
     /**
-     * Gets all the salaries from the DB where amount of salary is higher than the param
+     * Gets all the ID's from Employees where the salary is higher than the param
      * @param minSalary
      * @return salary-Objects
      * @throws RemoteException
      */
-    public String getSalaryHigherAs(int minSalary) throws RemoteException {
+    public String getSalaryIdsHigherAs(int minSalary) throws RemoteException {
         try {
-            ArrayList<Salary> salaries = connector.getSalariesHigherThan(minSalary);
+            ArrayList<Integer> emp_nos = connector.getSalaryIDHigherThan(minSalary);
 
-            System.out.println("Server is returning salaries > " + minSalary + " as Salary-Objects");
-            return gson.toJson(salaries);
+            System.out.println("Server is returning Employee-ID's with salaries > " + minSalary + " as Integer ArrayList");
+            return gson.toJson(emp_nos);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -262,6 +262,36 @@ public class BloomFilterServant extends UnicastRemoteObject implements BloomFilt
             System.out.println("SalariesMatching: Bitset-Size is not matching, " + e);
             return null;
         }
+    }
+
+    public String getEmployeesMatchingId(String gsonIds) throws RemoteException {
+        ArrayList<Integer> empNos = gson.fromJson(gsonIds,
+                new TypeToken<ArrayList<Integer>>() {}.getType());
+
+        ArrayList<Employee> employees= new ArrayList<Employee>();
+        for (int empNo: empNos) {
+            try {
+                employees.add(connector.getEmployeeByID(Integer.toString(empNo)));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return gson.toJson(employees);
+    }
+
+    public String getSalariesMatchingId(String gsonIds) throws RemoteException {
+        ArrayList<Integer> empNos = gson.fromJson(gsonIds,
+                new TypeToken<ArrayList<Integer>>() {}.getType());
+
+        ArrayList<Salary> salaries= new ArrayList<Salary>();
+        for (int empNo: empNos) {
+            try {
+                salaries.add(connector.getSalaryByID(Integer.toString(empNo)));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return gson.toJson(salaries);
     }
 
     private ArrayList<JoinedEmployee> joinDeptManagersWithEmployees(ArrayList <Dept_Manager> deptManagers) throws SQLException {
