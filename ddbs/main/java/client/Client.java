@@ -1,4 +1,5 @@
-package client; /**
+package client;
+/**
  * Created by Andy on 09.11.16.
  */
 
@@ -6,6 +7,7 @@ package client; /**
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.sun.glass.ui.Size;
 import server.DBConnector;
 import shared.*;
 import shared.db_projection.Dept_Manager;
@@ -28,7 +30,10 @@ public class Client {
         //check argument and exit if not correct
         checkArguments(args);
 
-        NodeStarter nodeStarter = new NodeStarter(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+        int bloomfilterSize = Integer.parseInt(args[0]);
+        int numberOfHashes = Integer.parseInt(args[1]);
+
+        NodeStarter nodeStarter = new NodeStarter(bloomfilterSize, numberOfHashes);
 
         // [0] Setup localBloomfilter
         BloomFilter localBloom = nodeStarter.setupLocalBloomfilter();
@@ -37,23 +42,32 @@ public class Client {
         BloomFilterService service2 = nodeStarter.setRemoteService(Constants.PORT2);
 
         Gson gson = new GsonBuilder().create();
+        SizeComparer sizeComparer = new SizeComparer(bloomfilterSize,numberOfHashes);
 
 
 
         // [1] Get projections from remote nodes
-        BitSet bitSet1 = service1.getBitSetEmployeesByName("Tokuyasu");
-        BitSet bitSet2 = service2.getBitSetSalaryHigherAs(155000);
+        BitSet bitSet1 = service1.getBitSetEmployeesByName("Xiahua");
+        BitSet bitSet2 = service2.getBitSetSalaryHigherAs(140000);
+
+        // [Size]
+        sizeComparer.increaseBloomFilterJoinSize(bitSet1, "[1] Bitset 1");
+        sizeComparer.increaseBloomFilterJoinSize(bitSet2, "[1] Bitset 2");
         System.out.println("Bitset1 : size= "+ bitSet1.size() +"\t" + bitSet1.toString());
         System.out.println("Bitset2 : size= "+ bitSet2.size() +"\t" + bitSet2.toString());
 
         // [2] Intersection with a logical AND-Operator
         bitSet1.and(bitSet2);
-        System.out.println("Intersected : size= "+ bitSet1.size() +"\t" + bitSet1.toString());
+        System.out.println("Intersected : size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
 
         // [3] Send Intersection to nodes
 
         String gsonMatchingEmpl = service1.getEmployeesMatching(bitSet1);
         String gsonMatchingSal = service2.getSalariesMatching(bitSet1);
+
+        // [Size]
+        sizeComparer.increaseBloomFilterJoinSize(bitSet1, "[3] Intersected Bitset 1");
+        sizeComparer.increaseBloomFilterJoinSize(bitSet1, "[3] Intersected Bitset 2");
 
         // [4] read in matches of nodes
         ArrayList<Employee> matchingEmpl = gson.fromJson(gsonMatchingEmpl,
@@ -61,77 +75,26 @@ public class Client {
         ArrayList<Salary> matchingSal = gson.fromJson(gsonMatchingSal,
                 new TypeToken<ArrayList<Salary>>() {}.getType());
 
+        // [Size]
+        sizeComparer.increaseBloomFilterJoinSize(gsonMatchingEmpl, "[4] Matching Empl");
+        sizeComparer.increaseBloomFilterJoinSize(gsonMatchingSal, "[4] Matching Sal");
+
         // [5] final join and check for False Positives
         ArrayList<EmployeeAndSalaries> combinedEmployees= new ArrayList<EmployeeAndSalaries>();
         for (Employee emp: matchingEmpl) {
             for (Salary sal : matchingSal) {
                 if(emp.getEmp_no().equals(sal.getEmp_no())) {
                     EmployeeAndSalaries match = new EmployeeAndSalaries(emp, sal);
-                    match.printOut();
+                    //match.printOut();
                     combinedEmployees.add(match);
                 }
             }
         }
 
-
-
-
-        //TODO old code: remove at the end
-
-        //        //Testing: print out 'Mary's from node1
-//        String gsonEmployees = service1.getEmployeesByName("Mary");
-//        ArrayList<Employee> employees = gson.fromJson(gsonEmployees,
-//                new TypeToken<ArrayList<Employee>>() {}.getType());
-//        for (Employee emp: employees) {
-//            emp.printOut();
-//        }
-//
-//        //Testing: get all Salaries from node2
-//        String gsonSalaries = service2.getSalaryHigherAs(150000);
-//        ArrayList<Salary> salaries = gson.fromJson(gsonSalaries,
-//                new TypeToken<ArrayList<Salary>>() {}.getType());
-//        for (Salary sal: salaries) {
-//            sal.printOut();
-//        }
-
-
-
-
-        //TODO old code: remove at the end
-
-        //bloomFilter.add(345);
-        //bloomFilter.displayHashTable();
-
-//        SizeComparer sizeComparer = new SizeComparer();
-//        //Send dept managers classicly for join
-//        Gson gson = new GsonBuilder().create();
-//        String gsonDeptManagers = gson.toJson(deptManagers);
-//        sizeComparer.increaseClassicJoinSize(RamUsageEstimator.sizeOf(gsonDeptManagers));
-//
-//        String gsonJoinedEmployees = service.sendDeptManagerClassic(gsonDeptManagers);
-//        sizeComparer.increaseClassicJoinSize(RamUsageEstimator.sizeOf(gsonJoinedEmployees));
-//
-//        ArrayList<JoinedEmployee> joinedEmployees = gson.fromJson(gsonJoinedEmployees, new TypeToken<ArrayList<JoinedEmployee>>() {
-//        }.getType());
-//        sizeComparer.setNumberOfJoins(joinedEmployees.size());
-//
-//
-//        //send by BloomFilter
-//        for (Dept_Manager deptManager : deptManagers) {
-//            bloomFilter.add(Integer.parseInt(deptManager.getEmp_no()));
-//        }
-//
-//
-//        //send Bloomfilter, print out result
-//        sizeComparer.increaseBloomFilterJoinSize(RamUsageEstimator.sizeOf(bloomFilter.getBitSet()));
-//        String gsonEmployees = service.sendBitset(bloomFilter.getBitSet());
-//        sizeComparer.increaseBloomFilterJoinSize(RamUsageEstimator.sizeOf(gsonEmployees));
-//        ArrayList<Employee> employees = gson.fromJson(gsonEmployees, new TypeToken<ArrayList<Employee>>() {
-//        }.getType());
-//
-//        sizeComparer.calculateFalsePositives(employees.size());
-//        sizeComparer.printStats();
-
+        // [size]
+        sizeComparer.setNumberOfJoins(combinedEmployees.size()*2);
+        sizeComparer.calculateFalsePositives(matchingEmpl.size() + matchingSal.size());
+        sizeComparer.printStats();
     }
 
     /**
