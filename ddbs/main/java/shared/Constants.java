@@ -15,6 +15,6 @@ public final class Constants {
     public static final int PORT2 = 3001;
 
 
-    public static final String searchName = "Xiahua";
-    public static final int minSalary = 100000;
+    public static final String searchName = "Georgi";
+    public static final int minSalary = 110000;
 }

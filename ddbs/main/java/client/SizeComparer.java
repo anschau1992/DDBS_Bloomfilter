@@ -70,7 +70,7 @@ public class SizeComparer {
         System.out.println();
         System.out.println();
         System.out.println("=========================================================================================================");
-        System.out.println("Number of Hashes: " + hashNumbers + "\t Bloomfiltersize: " + bloomFilterSize);
+        System.out.println("#Hashes {k}: " + hashNumbers + "\t Bloomfiltersize {m}: " + bloomFilterSize);
         System.out.println("Semi Join - Total size:  "+ semiJointTotalSize + " "+ semiJoins);
         System.out.println("BloomFilter Join - Total size:  "+ bloomFilterJointTotalSize + " "+ blommFilterjoins);
         System.out.println("Number of Joins: " + numberOfJoins + "\t Number of False Positives: " + falsePositives);

@@ -61,8 +61,8 @@ public class Client {
         // [Size]
         sizeComparer.increaseBloomFilterJoinSize(bitSet1, "[1] Bitset 1");
         sizeComparer.increaseBloomFilterJoinSize(bitSet2, "[1] Bitset 2");
-        System.out.println("Bitset1 : size= "+ bitSet1.size() +"\t" + bitSet1.toString());
-        System.out.println("Bitset2 : size= "+ bitSet2.size() +"\t" + bitSet2.toString());
+        //System.out.println("Bitset1 : size= "+ bitSet1.size() +"\t" + bitSet1.toString());
+        //System.out.println("Bitset2 : size= "+ bitSet2.size() +"\t" + bitSet2.toString());
 
         sizeComparer.increaseSemiJoinSize(gsonEmpNo1, "[1] Emp No's 1");
         sizeComparer.increaseSemiJoinSize(gsonEmpNo2, "[1] Emp No's 2");
@@ -119,7 +119,7 @@ public class Client {
                     gotMatch = true;
                 }
             }
-            if(gotMatch) {
+            if(!gotMatch) {
                 sizeComparer.increaseFalsePositives(1);
             }
         }

@@ -12,21 +12,6 @@ public class UniversalHashFunction implements HashFunction {
     private int a;
     private int b;
 
-    /**
-     * Initializes random number a & b dependent on the given primeNumber
-     * primeNUmber has to be higher than the max input into the hash-function
-     * @param primeNumber
-     */
-    public  UniversalHashFunction (int primeNumber) {
-        this.primeNumber = primeNumber;
-        //usally second param is max+1, although we look for prime-1 ==> primeNumber
-        a = ThreadLocalRandom.current().nextInt(1, primeNumber);
-        b = ThreadLocalRandom.current().nextInt(0, primeNumber);
-
-        //TODO: remove
-        System.out.println("a: "+ a +"\tb: "+ b);
-    }
-
     public UniversalHashFunction (int a, int b) {
         this.a = a;
         this.b = b;
