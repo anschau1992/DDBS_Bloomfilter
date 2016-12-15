@@ -30,7 +30,7 @@
             <version>5.1.38</version>
         </dependency>
 
-        <!-- GSON --> JSON -->
+        <!-- GSON JSON -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
