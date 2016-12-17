@@ -20,4 +20,8 @@ public final class Constants {
     //public static final String searchName = "Georgi";
     public static final int minSalary = 125000;
     //public static final int minSalary = 90000;
+
+
+    //csv
+    public static final String csvOutput = "results.csv";
 }

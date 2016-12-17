@@ -94,4 +94,32 @@ public class SizeComparer {
     public int getFalsePositives() {
         return falsePositives;
     }
+
+    public int getBloomFilterSize() {
+        return bloomFilterSize;
+    }
+
+    public int getHashNumbers() {
+        return hashNumbers;
+    }
+
+    public ArrayList<CompareThing> getSemiJoinSizes() {
+        return semiJoinSizes;
+    }
+
+    public ArrayList<CompareThing> getBloomFilterJoinSizes() {
+        return bloomFilterJoinSizes;
+    }
+
+    public int getNumberOfJoins() {
+        return numberOfJoins;
+    }
+
+    public long getSemiJointTotalSize() {
+        return semiJointTotalSize;
+    }
+
+    public long getBloomFilterJointTotalSize() {
+        return bloomFilterJointTotalSize;
+    }
 }

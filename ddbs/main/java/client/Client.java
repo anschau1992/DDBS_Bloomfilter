@@ -26,6 +26,125 @@ import java.util.InputMismatchException;
 
 public class Client {
 
+    public JoinResult join(int bloomfilterSize, int numberOfHashes) throws RemoteException, NotBoundException, MalformedURLException {
+
+        NodeStarter nodeStarter = new NodeStarter(bloomfilterSize, numberOfHashes);
+
+        // [0] Setup localBloomfilter
+        BloomFilter localBloom = nodeStarter.setupLocalBloomfilter();
+        // [0] Setup service to end-nodes
+        BloomFilterService service1 = nodeStarter.setRemoteService(Constants.PORT1);
+        BloomFilterService service2 = nodeStarter.setRemoteService(Constants.PORT2);
+
+        Gson gson = new GsonBuilder().create();
+        SizeComparer sizeComparer = new SizeComparer(bloomfilterSize,numberOfHashes);
+
+
+
+        // [1] Get projections from remote nodes
+        BitSet bitSet1 = service1.getBitSetEmployeesByName(Constants.searchName);
+        BitSet bitSet2 = service2.getBitSetSalaryHigherAs(Constants.minSalary);
+
+        // [1.1] Get Projections Semi-Join
+        String gsonEmpNo1 = service1.getEmployeesIDByName(Constants.searchName);
+        String gsonEmpNo2 = service2.getSalaryIdsHigherAs(Constants.minSalary);
+        ArrayList<Integer> empNo1 = gson.fromJson(gsonEmpNo1,
+                new TypeToken<ArrayList<Integer>>() {}.getType());
+        ArrayList<Integer> empNo2 = gson.fromJson(gsonEmpNo2,
+                new TypeToken<ArrayList<Integer>>() {}.getType());
+
+        //System.out.println("Employee # " + empNo1.size());
+        //System.out.println("Salaries-Empl# " + empNo2.size());
+
+        // [Size]
+        sizeComparer.increaseBloomFilterJoinSize(bitSet1, "[1] Bitset 1");
+        sizeComparer.increaseBloomFilterJoinSize(bitSet2, "[1] Bitset 2");
+        //System.out.println("Bitset1 : size= "+ bitSet1.size() +"\t" + bitSet1.toString());
+        //System.out.println("Bitset2 : size= "+ bitSet2.size() +"\t" + bitSet2.toString());
+
+        sizeComparer.increaseSemiJoinSize(gsonEmpNo1, "[1] Emp No's 1");
+        sizeComparer.increaseSemiJoinSize(gsonEmpNo2, "[1] Emp No's 2");
+
+
+
+        // [2.1] Intersection with a logical AND-Operator
+        //System.out.println("BitSet 1: size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
+        //System.out.println("BitSet 2: size= "+ bitSet2.size() +" True's: " + bitSet2.cardinality() +"\t" + bitSet2.toString());
+        bitSet1.and(bitSet2);
+        //System.out.println("Intersected : size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
+        // [2.2] Intersection Semi-Join
+        ArrayList<Integer> intersetion = integerIntersection(empNo1, empNo2);
+
+
+        // [3.1] Send Intersection to nodes
+        String gsonEmplBloom = service1.getEmployeesMatching(bitSet1);
+        String gsonSalBloom = service2.getSalariesMatching(bitSet1);
+
+        // [3.2] Send Intersection to nodes - Semi-Join
+        String gsonEmplSemi = service1.getEmployeesMatchingId(gson.toJson(intersetion));
+        String gsonSalSemi = service2.getSalariesMatchingId(gson.toJson(intersetion));
+
+
+
+        // [Size]
+        sizeComparer.increaseBloomFilterJoinSize(bitSet1, "[3] Intersected Bitset 1");
+        sizeComparer.increaseBloomFilterJoinSize(bitSet1, "[3] Intersected Bitset 2");
+
+        sizeComparer.increaseSemiJoinSize(intersetion, "[3] Intersected Integer-List 1");
+        sizeComparer.increaseSemiJoinSize(intersetion, "[3] Intersected Integer-List 2");
+
+
+        // [4] read in matches of nodes
+        ArrayList<Employee> matchingEmpl = gson.fromJson(gsonEmplBloom,
+                new TypeToken<ArrayList<Employee>>() {}.getType());
+        ArrayList<Salary> matchingSal = gson.fromJson(gsonSalBloom,
+                new TypeToken<ArrayList<Salary>>() {}.getType());
+
+        // [Size]
+        sizeComparer.increaseBloomFilterJoinSize(gsonEmplBloom, "[4] Matching Empl");
+        sizeComparer.increaseBloomFilterJoinSize(gsonSalBloom, "[4] Matching Sal");
+
+        sizeComparer.increaseSemiJoinSize(gsonEmplSemi, "[4] Matching Empl");
+        sizeComparer.increaseSemiJoinSize(gsonSalSemi, "[4] Matching Sal");
+
+        // [5] final join and check for False Positives
+        ArrayList<EmployeeAndSalaries> combinedEmployees= new ArrayList<EmployeeAndSalaries>();
+        for (Employee emp: matchingEmpl) {
+            for (Salary sal : matchingSal) {
+                if(emp.getEmp_no().equals(sal.getEmp_no())) {
+                    EmployeeAndSalaries match = new EmployeeAndSalaries(emp, sal);
+                    //match.printOut();
+                    combinedEmployees.add(match);
+                }
+            }
+        }
+        //System.out.println("False positiv only employee # " + sizeComparer.getFalsePositives());
+
+        //falsePositives
+        sizeComparer.increaseFalsePositives(matchingSal.size() - combinedEmployees.size());
+        sizeComparer.increaseFalsePositives(matchingEmpl.size() - combinedEmployees.size());
+
+
+        // [size]
+        sizeComparer.setNumberOfJoins(combinedEmployees.size());
+        //sizeComparer.calculateFalsePositives(matchingEmpl.size() + matchingSal.size());
+        //sizeComparer.printStats();
+
+        return createJoinResult(sizeComparer, bloomfilterSize, numberOfHashes);
+    }
+
+    private JoinResult createJoinResult(SizeComparer sizeComparer, int bloomfilterSize, int numberOfHashes) {
+        JoinResult joinResult = new JoinResult();
+        joinResult.setJoins(sizeComparer.getNumberOfJoins());
+        joinResult.setFalsePositives(sizeComparer.getFalsePositives());
+        joinResult.setSemiJoinSizes(sizeComparer.getSemiJoinSizes());
+        joinResult.setBloomFilterJoinSizes(sizeComparer.getBloomFilterJoinSizes());
+        joinResult.setBloomFilterSize(bloomfilterSize);
+        joinResult.setHashes(numberOfHashes);
+
+        return joinResult;
+    }
+
     public static void main(String[] args) throws RemoteException, NotBoundException, MalformedURLException {
         //check argument and exit if not correct
         checkArguments(args);
@@ -73,10 +192,10 @@ public class Client {
 
 
         // [2.1] Intersection with a logical AND-Operator
-        System.out.println("BitSet 1: size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
-        System.out.println("BitSet 2: size= "+ bitSet2.size() +" True's: " + bitSet2.cardinality() +"\t" + bitSet2.toString());
+        //System.out.println("BitSet 1: size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
+        //System.out.println("BitSet 2: size= "+ bitSet2.size() +" True's: " + bitSet2.cardinality() +"\t" + bitSet2.toString());
         bitSet1.and(bitSet2);
-        System.out.println("Intersected : size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
+        //System.out.println("Intersected : size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
         // [2.2] Intersection Semi-Join
         ArrayList<Integer> intersetion = integerIntersection(empNo1, empNo2);
 

@@ -52,8 +52,11 @@ public class NodeStarter {
     public BloomFilterService setRemoteService(int port) throws RemoteException, NotBoundException, MalformedURLException {
         BloomFilterService service = (BloomFilterService) Naming.lookup("rmi://localhost:"+port+"/bloom");
 
-        System.out.println("Node "+port+": " + service.createNewBloomFilter(slotCapacity, numberOfBloomfunctions));
-        System.out.println("Node "+port+": " + service.sendHashFunctions(generator.getANumbers(), generator.getBNumbers()));
+        service.createNewBloomFilter(slotCapacity, numberOfBloomfunctions);
+        service.sendHashFunctions(generator.getANumbers(), generator.getBNumbers());
+        //System.out.println("Node "+port+": " + service.sendHashFunctions(generator.getANumbers(), generator.getBNumbers()));
+        //System.out.println("Node "+port+": " + service.sendHashFunctions(generator.getANumbers(), generator.getBNumbers()));
+
 
         return service;
     }
