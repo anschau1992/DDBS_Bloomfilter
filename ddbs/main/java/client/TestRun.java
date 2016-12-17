@@ -28,7 +28,7 @@ public class TestRun {
         int raiseK = Integer.parseInt(args[5]);
 
         int mIteration = calculateIteration(startM, endM, raiseM) + 1;
-        int kIteration = calculateIteration(startK, endK, raiseK);
+        int kIteration = calculateIteration(startK, endK, raiseK) + 1;
         JoinResult [][] results = new JoinResult[mIteration][kIteration];
 
         Client client = new Client();

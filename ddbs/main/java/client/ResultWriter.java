@@ -20,26 +20,40 @@ public class ResultWriter {
 
 
             //header
-            String[] header  = new String[mSize*4+1];
+            String[] header  = new String[mSize+1];
             header[0] = "K \\ M";
-            for (int m = 0; m < mSize; m++) {
-                header[m*4+1] = Integer.toString(results[m][0].getBloomFilterSize());
-                header[m*4+2] = "";
-                header[m*4+3] = "";
-                header[m*4+4] = "";
+            for (int m = 1; m <= mSize; m++) {
+                header[m] = Integer.toString(results[m-1][0].getBloomFilterSize());
 
             }
             writer.writeNext(header);
 
             //k and body(False-Positives)
             for (int k = 0; k < kSize; k++) {
-                String[] body = new String[mSize*4+1];
+                String[] body = new String[mSize+1];
                 body[0] = Integer.toString(results[0][k].getHashes());
                 for(int m = 0; m < (mSize); m++) {
-                    body[m*4+1] = Integer.toString(results[m][k].getSetToTrue1());
-                    body[m*4+2] = Integer.toString(results[m][k].getSetToTrue2());
-                    body[m*4+3] = Integer.toString(results[m][k].getSetToTrue3());
-                    body[m*4+4] = Integer.toString(results[m][k].getFalsePositives());
+                    body[m+1] = Integer.toString(results[m][k].getSetToTrue1());
+                }
+                writer.writeNext(body);
+                //print numbers of ones in bf2
+                body[0] = "";
+                for(int m = 0; m < (mSize); m++) {
+                    body[m+1] = Integer.toString(results[m][k].getSetToTrue2());
+                }
+                writer.writeNext(body);
+
+                //print numbers of ones in cbf
+                body[0] = "";
+                for(int m = 0; m < (mSize); m++) {
+                    body[m+1] = Integer.toString(results[m][k].getSetToTrue3());
+                }
+                writer.writeNext(body);
+
+                //print number of false positives
+                body[0] = "";
+                for(int m = 0; m < (mSize); m++) {
+                    body[m+1] = Integer.toString(results[m][k].getFalsePositives());
                 }
                 writer.writeNext(body);
             }
