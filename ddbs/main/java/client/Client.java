@@ -58,6 +58,9 @@ public class Client {
         ArrayList<Integer> empNo2 = gson.fromJson(gsonEmpNo2,
                 new TypeToken<ArrayList<Integer>>() {}.getType());
 
+        System.out.println("Employee # " + empNo1.size());
+        System.out.println("Salaries-Empl# " + empNo2.size());
+
         // [Size]
         sizeComparer.increaseBloomFilterJoinSize(bitSet1, "[1] Bitset 1");
         sizeComparer.increaseBloomFilterJoinSize(bitSet2, "[1] Bitset 2");
@@ -70,6 +73,8 @@ public class Client {
 
 
         // [2.1] Intersection with a logical AND-Operator
+        System.out.println("BitSet 1: size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
+        System.out.println("BitSet 2: size= "+ bitSet2.size() +" True's: " + bitSet2.cardinality() +"\t" + bitSet2.toString());
         bitSet1.and(bitSet2);
         System.out.println("Intersected : size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
         // [2.2] Intersection Semi-Join
@@ -82,7 +87,7 @@ public class Client {
 
         // [3.2] Send Intersection to nodes - Semi-Join
         String gsonEmplSemi = service1.getEmployeesMatchingId(gson.toJson(intersetion));
-        String gsonSalSemi = service2.getEmployeesMatchingId(gson.toJson(intersetion));
+        String gsonSalSemi = service2.getSalariesMatchingId(gson.toJson(intersetion));
 
 
 
@@ -110,20 +115,20 @@ public class Client {
         // [5] final join and check for False Positives
         ArrayList<EmployeeAndSalaries> combinedEmployees= new ArrayList<EmployeeAndSalaries>();
         for (Employee emp: matchingEmpl) {
-            boolean gotMatch = false;
             for (Salary sal : matchingSal) {
                 if(emp.getEmp_no().equals(sal.getEmp_no())) {
                     EmployeeAndSalaries match = new EmployeeAndSalaries(emp, sal);
-                    match.printOut();
+                    //match.printOut();
                     combinedEmployees.add(match);
-                    gotMatch = true;
                 }
             }
-            if(!gotMatch) {
-                sizeComparer.increaseFalsePositives(1);
-            }
         }
+        System.out.println("False positiv only employee # " + sizeComparer.getFalsePositives());
+
+        //falsePositives
         sizeComparer.increaseFalsePositives(matchingSal.size() - combinedEmployees.size());
+        sizeComparer.increaseFalsePositives(matchingEmpl.size() - combinedEmployees.size());
+
 
         // [size]
         sizeComparer.setNumberOfJoins(combinedEmployees.size());

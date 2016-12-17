@@ -184,7 +184,7 @@ public class DBConnector {
     public ArrayList<Salary> getSalariesHigherThan(int salary) throws SQLException {
         ArrayList<Salary> salaries = new ArrayList<Salary>();
 
-        String sqlQuery = "SELECT * FROM salaries WHERE salary >'" + salary + "'";
+        String sqlQuery = "SELECT * FROM salaries_distinct WHERE salary >'" + salary + "'";
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
 
         ResultSet result = statement.executeQuery();
@@ -208,7 +208,7 @@ public class DBConnector {
     public ArrayList<Integer> getSalaryIDHigherThan(int salary) throws SQLException {
         ArrayList<Integer> emp_nos = new ArrayList<Integer>();
 
-        String sqlQuery = "SELECT * FROM salaries WHERE salary >'" + salary + "'";
+        String sqlQuery = "SELECT * FROM salaries_distinct WHERE salary >'" + salary + "'";
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
 
         ResultSet result = statement.executeQuery();
@@ -219,15 +219,15 @@ public class DBConnector {
         return emp_nos;
     }
 
-    public Salary getSalaryByID (String id) throws SQLException {
-        String sqlQuery = "SELECT * FROM salaries " +
-                "WHERE emp_no = '" + id + "'";
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
-
-        ResultSet result = statement.executeQuery();
-        while (result.next()) {
-            return createSalary(result);
-        }
-        return null;
-    }
+//    public Salary getSalaryByID (String id) throws SQLException {
+//        String sqlQuery = "SELECT * FROM salaries " +
+//                "WHERE emp_no = '" + id + "'";
+//        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+//
+//        ResultSet result = statement.executeQuery();
+//        while (result.next()) {
+//            return createSalary(result);
+//        }
+//        return null;
+//    }
 }

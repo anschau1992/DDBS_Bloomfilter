@@ -90,4 +90,8 @@ public class SizeComparer {
         }
 
     }
+
+    public int getFalsePositives() {
+        return falsePositives;
+    }
 }
