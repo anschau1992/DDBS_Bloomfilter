@@ -16,10 +16,9 @@ public final class Constants {
 
 
     //public static final String searchName = "Tokuyasu";
-    public static final String searchName = "Charmane";
-    //public static final String searchName = "Georgi";
-    public static final int minSalary = 125000;
-    //public static final int minSalary = 90000;
+    //public static final String searchName = "Charmane";
+    public static final String searchName = "Georgi";
+    public static final int minSalary = 80000;
 
 
     //csv
