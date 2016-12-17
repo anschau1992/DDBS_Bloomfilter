@@ -1,2 +1,4 @@
 DDBS_Bloomfilter.iws
 .*
+target/
+results.csv

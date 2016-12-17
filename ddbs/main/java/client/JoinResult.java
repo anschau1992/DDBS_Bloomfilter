@@ -9,6 +9,10 @@ public class JoinResult {
     private int joins;
     private int falsePositives;
 
+    private int setToTrue1;
+    private int setToTrue2;
+    private int setToTrue3;
+
     private ArrayList<CompareThing> semiJoinSizes;
     private ArrayList<CompareThing> bloomFilterJoinSizes;
 
@@ -61,5 +65,23 @@ public class JoinResult {
 
     public int getHashes() {
         return hashes;
+    }
+
+    public void setNumberOfOnes(int a, int b, int c) {
+        this.setToTrue1 = a;
+        this.setToTrue2 = b;
+        this.setToTrue3 = c;
+    }
+
+    public int getSetToTrue1() {
+        return setToTrue1;
+    }
+
+    public int getSetToTrue2() {
+        return setToTrue2;
+    }
+
+    public int getSetToTrue3() {
+        return setToTrue3;
     }
 }

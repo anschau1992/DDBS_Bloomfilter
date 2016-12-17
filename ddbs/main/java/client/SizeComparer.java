@@ -15,6 +15,11 @@ public class SizeComparer {
     private ArrayList<CompareThing> semiJoinSizes;
     private ArrayList<CompareThing> bloomFilterJoinSizes;
 
+    private int setToTrue1;
+    private int setToTrue2;
+    private int setToTrue3;
+
+
     private int numberOfJoins;
     private int falsePositives;
 
@@ -121,5 +126,29 @@ public class SizeComparer {
 
     public long getBloomFilterJointTotalSize() {
         return bloomFilterJointTotalSize;
+    }
+
+    public int getSetToTrue1() {
+        return setToTrue1;
+    }
+
+    public void setSetToTrue1(int setToTrue1) {
+        this.setToTrue1 = setToTrue1;
+    }
+
+    public int getSetToTrue2() {
+        return setToTrue2;
+    }
+
+    public void setSetToTrue2(int setToTrue2) {
+        this.setToTrue2 = setToTrue2;
+    }
+
+    public int getSetToTrue3() {
+        return setToTrue3;
+    }
+
+    public void setSetToTrue3(int setToTrue3) {
+        this.setToTrue3 = setToTrue3;
     }
 }

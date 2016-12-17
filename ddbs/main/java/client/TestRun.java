@@ -36,8 +36,8 @@ public class TestRun {
             int kPosition = startK;
             for(int k = 0; k < kIteration; k++) {
                 results[m][k] = client.join(startM, kPosition);
-                kPosition += raiseK;
                 System.out.println("JoinResult calculated with k= " + kPosition + ", m = " + startM);
+                kPosition += raiseK;
             }
             startM += raiseM;
         }

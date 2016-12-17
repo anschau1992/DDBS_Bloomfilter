@@ -20,19 +20,26 @@ public class ResultWriter {
 
 
             //header
-            String[] header  = new String[mSize+1];
+            String[] header  = new String[mSize*4+1];
             header[0] = "K \\ M";
-            for (int m = 1; m < mSize; m++) {
-                header[m] = Integer.toString(results[m][0].getBloomFilterSize());
+            for (int m = 0; m < mSize; m++) {
+                header[m*4+1] = Integer.toString(results[m][0].getBloomFilterSize());
+                header[m*4+2] = "";
+                header[m*4+3] = "";
+                header[m*4+4] = "";
+
             }
             writer.writeNext(header);
 
             //k and body(False-Positives)
             for (int k = 0; k < kSize; k++) {
-                String[] body = new String[mSize+1];
+                String[] body = new String[mSize*4+1];
                 body[0] = Integer.toString(results[0][k].getHashes());
                 for(int m = 0; m < (mSize); m++) {
-                    body[m+1] = Integer.toString(results[m][k].getFalsePositives());
+                    body[m*4+1] = Integer.toString(results[m][k].getSetToTrue1());
+                    body[m*4+2] = Integer.toString(results[m][k].getSetToTrue2());
+                    body[m*4+3] = Integer.toString(results[m][k].getSetToTrue3());
+                    body[m*4+4] = Integer.toString(results[m][k].getFalsePositives());
                 }
                 writer.writeNext(body);
             }
