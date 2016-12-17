@@ -63,8 +63,6 @@ public class Client {
         //System.out.println("Bitset2 : size= "+ bitSet2.size() +"\t" + bitSet2.toString());
         sizeComparer.setSetToTrue1(bitSet1.cardinality());
         sizeComparer.setSetToTrue2(bitSet2.cardinality());
-        System.out.println(bitSet1.cardinality());
-        System.out.println(bitSet2.cardinality());
 
         sizeComparer.increaseSemiJoinSize(gsonEmpNo1, "[1] Emp No's 1");
         sizeComparer.increaseSemiJoinSize(gsonEmpNo2, "[1] Emp No's 2");
@@ -76,7 +74,6 @@ public class Client {
         //System.out.println("BitSet 2: size= "+ bitSet2.size() +" True's: " + bitSet2.cardinality() +"\t" + bitSet2.toString());
         bitSet1.and(bitSet2);
         sizeComparer.setSetToTrue3(bitSet1.cardinality());
-        System.out.println(bitSet1.cardinality());
         //System.out.println("Intersected : size= "+ bitSet1.size() +" True's: " + bitSet1.cardinality() +"\t" + bitSet1.toString());
         // [2.2] Intersection Semi-Join
         ArrayList<Integer> intersetion = integerIntersection(empNo1, empNo2);
