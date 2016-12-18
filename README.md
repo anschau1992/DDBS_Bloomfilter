@@ -1,19 +1,5 @@
-<<<<<<< HEAD
-This is the new test repository for the ddbs_bloomfilter 2016, another test for auto-deployment again and againg
-
-
-Abgabe: 19.12.16
-
-
-
-#TODO:
-*Aufbau des Experimentes --> Besprechung mit Kevin
-*Hashfunctions-Familie --> Kombination möglich? ==> Mirko
-*Setup Latex-report + Aufbau des Reports ==> Andy
-*Experimentdurchführung (mit k & l spielen)
-=======
 #UZH - Distributed Database Systems HS2016
-####Mirco ??? & Andreas Schaufelbühl
+####Mirco Richter & Andreas Schaufelbühl
 
 
 ###Setup
@@ -21,19 +7,13 @@ Abgabe: 19.12.16
 * Integrate test_db containing test Data into mySQL DB: https://github.com/datacharmer/test_db
 
 ###Project structure
-The project is divided into the three following parts:
-* client: contains the client-side code
-* server: contains the server-side code
-* shared: contains code used by both sides (BloomFilter, Employees,..)
 
 
 ###Start
-* Run ApplicationServer.main() first
-* Run Client.main()
+* Run ApplicationServer.main() first with argumetn 3000
+* Run ApplicationServer.main() first with argumetn 3001
+* Run TestRun.main() with argument mStart(int) mEnd(int) mRaise(int) kStart(int) kEnd(int) kRaise(int)
 
-TODO:
-* Integration of two good hash-functions
-* Compare size of returning message with BloomFilter vs. classic Join
 
 Links:
 * Bloomfilter: http://billmill.org/bloomfilter-tutorial/
@@ -42,6 +22,3 @@ Links:
     * GitHub: https://github.com/dweiss/java-sizeof/blob/master/src/main/java/com/carrotsearch/sizeof/RamUsageEstimator.java
     * Maven: https://mvnrepository.com/artifact/com.carrotsearch/java-sizeof
     * Calculates the size of an object in (Bytes?)
-
-
->>>>>>> develop
