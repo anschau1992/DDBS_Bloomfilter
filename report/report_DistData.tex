@@ -37,15 +37,11 @@
 \listoftables
 	
 \section{Introduction}
-The basis for this project is a paper from Michael {\em et al}\cite{michael} that gives extensions of bloom filters from basic two-sites database joins to settings with multiple sites. Generally, in a distributed database setting bloom filters can be used to reduce the communication costs. Bloom filters can represent a dataset in a compressed way by hashing the data into a bit array, which we call the bloom filter. The result of hashing a data point gives the index or indices in the bit array which corresponds to this data point. This leads to two important properties of bloom filters. First, bloom filters can not be used to send data from one site to another. It rather represents a set of data points such that at a different site one can verify whether a given data point is included in the bloom filter or not. Secondly, when used for verifying whether a given data point is in a bloom filter, the bloom filter can actually give a false positive. Meaning, it claims that this data point is included in the set while it actually is not. As a result, it is not always advisable to use bloom filters. Michael (2007) shows us that there are three variables which contribute to the probability that a bloom filter return a false positive. First, the amount of data to be represented matters as well as the size or length of the bloom filter and the number of hash functions used. The paper already suggests an optimal relation between those variables for a simple bloom filter join between two sites and it goes on an shows how the bloom filters can be combined when there are multiple sites such that one can reduce communication cost even further. This leads us to our project where we set up an experiment to verify some claims made in Michael {\em et al}\cite{michael}.
+The basis for this project is a paper from Michael {\em et al}\cite{michael} that gives extensions of bloom filters from basic two-sites database joins to settings with multiple sites. Generally, in a distributed database setting bloom filters can be used to reduce the communication costs. Bloom filters can represent a dataset in a compressed way by hashing the data into a bit array, which we call the bloom filter. The result of hashing a data point gives the index or indices in the bit array which corresponds to this data point. This leads to two important properties of bloom filters. First, bloom filters can not be used to send data from one site to another. It rather represents a set of data points such that at a different site one can verify whether a given data point is included in the bloom filter or not. Secondly, when used for verifying whether a given data point is in a bloom filter, the bloom filter can actually give a false positive. Meaning, it claims that this data point is included in the set while it actually is not. As a result, it is not always advisable to use bloom filters. Michael {\em et al}\cite{michael} shows us that there are three variables which contribute to the probability that a bloom filter return a false positive. First, the amount of data to be represented matters as well as the size or length of the bloom filter and the number of hash functions used. The paper already suggests an optimal relation between those variables for a simple bloom filter join between two sites and it goes on an shows how the bloom filters can be combined when there are multiple sites such that one can reduce communication cost even further. This leads us to our project where we set up an experiment to verify some claims made in Michael {\em et al}\cite{michael}.
 
 \section{Problem Description}
 A join in a distributed database setting can lead to a lot of communication between the different sites. To reduce the communication cost, one can use bloom filters instead of sending the data points plainly. But since bloom filters do not contain data points but only a representation of them and can return false positives, it is not obvious that a join with bloom filters will perform better.\\\\
-Michael (2007) provides an optimal relation
-\begin{equation}
-	k \approx \frac{m}{n}*ln(2)
-\end{equation}
-between k the number of hash functions, m the size of the bloom filter and n the number of data points. This is for a bloom filter based join over two sites, this implies that there is only one bloom filter to construct. If we now consider a setting in which we want to join over data points distributed over more than 2 sites, Michael (2007) suggests building composed bloom filters. In our project we only consider the intersection\footnote{Micheal (2007) also covers the union of two bloom filter.} of two bloom filters. First of, to be able to intersect two bloom filters, they must be constructed the same way, in other words, they have to have the same length and use the identical hash functions.\\ Then, to build a composed bloom filter $bf_c$ representing the intersection of two bloom filter  $bf_1$ and $bf_2$ we set a index i in $bf_c$ as follows
+Michael {\em et al}\cite{michael} provides an optimal relation between the number of hash functions, the size of the bloom filter and the number of data points for a bloom filter based join over two sites. This implies that there is only one bloom filter to construct. If we now consider a setting in which we want to join over data points distributed over more than 2 sites, Michael {\em et al}\cite{michael} suggests building composed bloom filters. In our project we only consider the intersection\footnote{Micheal {\em et al}\cite{michael} also covers the union of two bloom filter.} of two bloom filters. First of, to be able to intersect two bloom filters, they must be constructed the same way, in other words, they have to have the same length and use the identical hash functions.\\ Then, to build a composed bloom filter $bf_c$ representing the intersection of two bloom filter  $bf_1$ and $bf_2$ we set a index i in $bf_c$ as follows
 \begin{equation}
 	bf_c[i] = 
 	\begin{cases}
@@ -53,7 +49,7 @@ between k the number of hash functions, m the size of the bloom filter and n the
 	0, & otherwise
 	\end{cases}
 \end{equation}
-Let us consider a master $site_m$ which wants to join data from two other sites, $site_1$ and $site_2$. Now instead of performing a bloom filter based join with both sites to get the data, the master site can demand the bloom filter from both sites, build the intersection bloom filter and send it back, so that both sites use the composed bloom filter to find join matches. The main focus of our project is this composed bloom filter. Since in the distributed setting the number of data points needed in the composed bloom filter is not available when $site_1$ and $site_2$ are building the bloom filters based on their data, it is not clear how $site_1$ and $site_2$ should choose the number of hash functions and the size of the bloom filter to minimize the communication cost. Michael (2007) provides theory to pre-compute error probabilities for composed bloom filters. For the intersection of two bloom filters, as we have established above, a bit at some index is set to 1 if and only if at the same index both bloom filters is set to 1. If we assume the distribution of our data points to be independent, Michael (2007) suggests that we can combine the probabilities as follows
+Let us consider a master $site_m$ which wants to join data from two other sites, $site_1$ and $site_2$. Now instead of performing a bloom filter based join with both sites to get the data, the master site can demand the bloom filter from both sites, build the intersection bloom filter and send it back, so that both sites use the composed bloom filter to find join matches. The main focus of our project is this composed bloom filter. Since in the distributed setting the number of data points needed in the composed bloom filter is not available when $site_1$ and $site_2$ are building the bloom filters based on their data, it is not clear how $site_1$ and $site_2$ should choose the number of hash functions and the size of the bloom filter to minimize the communication cost. Michael {\em et al}\cite{michael} provides theory to pre-compute error probabilities for composed bloom filters. For the intersection of two bloom filters, as we have established above, a bit at some index is set to 1 if and only if at the same index both bloom filters is set to 1. If we assume the distribution of our data points to be independent, Michael {\em et al}\cite{michael} suggests that we can combine the probabilities as follows
 \begin{equation}
 \label{set_to_1_theory}
 \begin{split}
@@ -122,7 +118,7 @@ The main steps of our concept are the following:
 
 
 
-One key aspect of any bloom filter implementation are the hash functions. They need to be independent and distribute uniformly. Both, equation \ref{set_to_1} and \ref{false_positive}, are only true for such hash functions. We decided to implement a universal class of hash functions. This allows us to define the number of hash functions to be used at the start and then we can choose those functions from our class. We used the same method as seen in Cormen (2009, p. 267), on designing a universal class of hash functions. As in the book described we chose a prime number p such that every key is smaller than p. Since we need to hash emp\_no in the bloom filter and the biggest emp\_no is smaller than 500'000, we chose $p = 500009$. We define two sets $\mathbb{Z}_p$ and $\mathbb{Z}_p^*$. $\mathbb{Z}_p$ denotes the set $\{0,1,...,p-1\}$ and $\mathbb{Z}_p^*$ denotes $\{1,2,...,p-1\}$. Then we can define a hash function with $a \in \mathbb{Z}_p^* \text{ and } b \in \mathbb{Z}_p$
+One key aspect of any bloom filter implementation are the hash functions. They need to be independent and distribute uniformly. Both, equation \ref{set_to_1} and \ref{false_positive}, are only true for such hash functions. We decided to implement a universal class of hash functions. This allows us to define the number of hash functions to be used at the start and then we can choose those functions from our class. We used the same method as seen in Cormen{\em et al}\cite{cormen} (p. 267), on designing a universal class of hash functions. As in the book described we chose a prime number p such that every key is smaller than p. Since we need to hash emp\_no in the bloom filter and the biggest emp\_no is smaller than 500'000, we chose $p = 500009$. We define two sets $\mathbb{Z}_p$ and $\mathbb{Z}_p^*$. $\mathbb{Z}_p$ denotes the set $\{0,1,...,p-1\}$ and $\mathbb{Z}_p^*$ denotes $\{1,2,...,p-1\}$. Then we can define a hash function with $a \in \mathbb{Z}_p^* \text{ and } b \in \mathbb{Z}_p$
 \begin{equation}
 	h_{ab}(k) = ((ak + b) \mathrel{mod} p) \mathrel{mod} m.
 \end{equation}
@@ -137,7 +133,7 @@ DO WE NEED THIS SECTION? DO WE WANT TO SHOW SOME OF THE IMPLEMENTATIOS-TECHNIQUE
 In this section we want to present some details of our implementation with focus on interesting parts.
 
 \subsection{Counting False Positive}
-When we perform the join as seen in figure REFERENCE TO FIGURE, in step INSERT NUMBER both sites return the join-matching tuples. Lets define these results as two sets $S_{emp}$ from site employee and $S_{sal}$ from site salary. We claim that if the emp\_no of a tuple in $S_{emp}$ is also in $S_{sal}$, then it cannot be a false positive. In other words, whenever a tuple in $S_{emp}$ has a emp\_no that does not exist in $S_{sal}$ and vice versa, it must be a false positive. \\
+When we perform the join as seen in figure \ref{fig:architecture}, in step 4 both sites return the join-matching tuples. Lets define these results as two sets $S_{emp}$ from site employee and $S_{sal}$ from site salary. We claim that if the emp\_no of a tuple in $S_{emp}$ is also in $S_{sal}$, then it cannot be a false positive. In other words, whenever a tuple in $S_{emp}$ has a emp\_no that does not exist in $S_{sal}$ and vice versa, it must be a false positive. \\
 To show this, we first consider what sort of emp\_no these sets potentially can contain. Lets consider site employee. We check all emp\_no returned from the query
 \begin{verbatim}
 SELECT emp_no FROM employees WHERE first_name = 'Georgi'
@@ -152,25 +148,34 @@ Now, we assume there exists a emp\_no which is in $S_{emp}$ and in $S_{sal}$ and
 \section{Evaluation}
 We ran our program with multiple inputs to see whether the expected values correlate with the data from our experiment. The data depends on the number of data points we insert in site employee ($n_{emp}$) and site salary ($n_{sal}$), the size of the bloom filter denoted as m and the number of hash functions denoted as k. As we kept the queries consistent, $n_{emp} \text{ and } n_{sal}$ stayed constant and we experimented with m and k. The queries we used returned $n_{emp} = 253$ and $n_{sal} = 17416$. To get reasonable expected values for the number of ones in a bloom filter, we chose m from 1'000 to 101'000 in steps of 2'000 and k from 1 to 31 in steps of 10.
 In this section, we present our findings based on three figures. You can find all of our comparison graphs in the appendix.
-\begin{figure}[ht]
+\begin{figure}[H]
 	\begin{center}
 		\includegraphics[scale=0.4]{res/1-emp.png}
 	\end{center}
 	\caption{Number of ones set in bloom filter from site employees - expected and measure in experiment with k = 1.}
 	\label{fig:eval1}
-\end{figure}\\
+\end{figure}
 In figure \ref{fig:eval1}, we can clearly see that the number of ones in the bloom filter from the site employee in step 1 in our experiment behaves as we expected in equation \ref{set_to_1}. Figure \ref{fig:eval1} only verifies our expectation when using only one hash function (k=1), but we can see this verification for all expectations about the number of ones in a non-composed bloom filter.
-\begin{figure}[ht]
+\begin{figure}[H]
 	\begin{center}
 		\includegraphics[scale=0.4]{res/1-composed.png}
 	\end{center}
-	\caption{Number of ones set in bloom filter from site employees - expected and measure in experiment with k = 1.}
+	\caption{Number of ones set in composed bloom filter - expected and measure in experiment with k = 1.}
 	\label{fig:eval2}
 \end{figure}
 Same is true for the our expectation for the number of ones in the composed bloom filter. Figure \ref{fig:eval2} shows, again with k=1, that our expectation in equation \ref{set_to_1_composed} is also correct.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.4]{res/1-fp.png}
+	\end{center}
+	\caption{Number of false positive - expected and measure in experiment with k = 1.}
+	\label{fig:eval3}
+\end{figure}
+As we can see in Figure \ref{fig:eval3}, our measured false positive are always above the expected line. The number of false positive still behave closely to what we expected. To precisely reveal the reason for that, we would need to run more tests. Possible causes are the independence of the data in the database or the independence and distribution of hash functions in our universal hash family. The tendency runs through the different graphs for different number of hash functions.
 
 
 \section{Conclusion}
+We can conclude that in our set up and implementation the equations \ref{set_to_1} and \ref{set_to_1_composed} given from Michael {\em et al}\cite{michael} are exact predictions of the number of ones set in a simple- or composed bloom filter. We measured the number of false positives a composed bloom filter returns slightly higher than expected. To be able to give the exact reason or reasons for that, requires some more testing that can be done in the next step. Nevertheless, our collected data behaves similar to the prediction, so the equation \ref{false_positive} still gives an reliable prediction of the number of false positives a composed bloom filter returns.
 
 \bibliography{refs}
 \bibliographystyle{abbrv}
