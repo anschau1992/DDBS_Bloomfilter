@@ -81,7 +81,8 @@ We then developed a tool, which we will present in detail in the Implementation 
  Data independency?
 
 \section{Experiment Set Up}
-We used a open source auto-generated dataset from GitHub\footnote{https://github.com/datacharmer/test\_db}. This is a relational dataset, with auto-generated fake data. In order to execute proper experiments with these databases, we modified the salary-table, so every emp_no is distinct (which is also the case in table employees). We did this because of two reasons. Firstly, to avoid problems with non-unique data represented in our Bloomfilter. As we hash over the emp_no within our Bloomfilter, the number of false positives raises unintentional, when not having unique values on both sides. Second, our implementation of evaluating the false positives demands unique keys on each site in order to count them correctly. The method used is discussed more in detail in Section ADDSECTIONREFERENCE The following list shows two tables, on which we execute our experiment: 
+We used a open source auto-generated dataset from GitHub\footnote{https://github.com/datacharmer/test\_db}. This is a relational dataset, with auto-generated fake data. In order to execute proper experiments with these databases, we modified the salary-table, so every emp\_no is distinct (which is also the case in table employees). We did this because of two reasons. Firstly, to avoid problems with non-unique data represented in our Bloomfilter. As we hash over the emp\_no within our Bloomfilter, the number of false positives raises unintentional, when not having unique values on both sides. Second, our implementation of evaluating the false positives demands unique keys on each site in order to count them correctly. The method used is discussed more in detail in Section \ref{sec:falsepositives}. The following list shows two tables, on which we execute our experiment:
+
 \begin{itemize}
 	\item employees (\uline{emp\_no}, birth\_date, first\_name, last\_name, gender, hire\_date)
 	\item salaries (\uline{emp\_no}, salary, from\_date, to\_date)
@@ -116,9 +117,6 @@ The main steps of our concept are the following:
 	\item Entries matching the intersected Bitset will be send to the master side
 	\item A actual join-process over employee.emp\_no = salary.emp\_no. is performed and the number of false-positives is evaluated.
 	\end{enumerate}
-
-
-
 One key aspect of any bloom filter implementation are the hash functions. They need to be independent and distribute uniformly. Both, equation \ref{set_to_1} and \ref{false_positive}, are only true for such hash functions. We decided to implement a universal class of hash functions. This allows us to define the number of hash functions to be used at the start and then we can choose those functions from our class. We used the same method as seen in Cormen{\em et al}\cite{cormen} (p. 267), on designing a universal class of hash functions. As in the book described we chose a prime number p such that every key is smaller than p. Since we need to hash emp\_no in the bloom filter and the biggest emp\_no is smaller than 500'000, we chose $p = 500009$. We define two sets $\mathbb{Z}_p$ and $\mathbb{Z}_p^*$. $\mathbb{Z}_p$ denotes the set $\{0,1,...,p-1\}$ and $\mathbb{Z}_p^*$ denotes $\{1,2,...,p-1\}$. Then we can define a hash function with $a \in \mathbb{Z}_p^* \text{ and } b \in \mathbb{Z}_p$
 \begin{equation}
 	h_{ab}(k) = ((ak + b) \mathrel{mod} p) \mathrel{mod} m.
@@ -130,10 +128,11 @@ In our case, $p = 500009$ and m is the size of the bloom filter. This is one has
 This means, for every hash function we simply choose a and b randomly from their sets to create $h_{ab}$.\\\\
 
 \section{Implementation}
-DO WE NEED THIS SECTION? DO WE WANT TO SHOW SOME OF THE IMPLEMENTATIOS-TECHNIQUES WE USED. MAYBE DEPENDS ON LENGTH OF OTHER SECTIONS? (- TRICK HOW WE COUNT FALSE POSITIVE THAT WE DONT NEED TO COMPARE AGAIN)
-In this section we want to present some details of our implementation with focus on interesting parts.
 
-\subsection{Counting False Positive}
+\subsection{Communication between sides}
+For a stable communication between the three sides we used the Java Remote Method Invocation (Java RMI). Every interaction is initialized by the master side.
+The hash-functions are randomly generated locally on the master side and sent to the two remote sides, where every side creates the identical bloomfilter out of the hash-functions received. For minimal communication costs we use the BitSet class from the Java API to implement the bloomfilter. 
+\subsection{Counting False Positive} \label{sec:falsepositives}
 When we perform the join as seen in figure \ref{fig:architecture}, in step 4 both sites return the join-matching tuples. Lets define these results as two sets $S_{emp}$ from site employee and $S_{sal}$ from site salary. We claim that if the emp\_no of a tuple in $S_{emp}$ is also in $S_{sal}$, then it cannot be a false positive. In other words, whenever a tuple in $S_{emp}$ has a emp\_no that does not exist in $S_{sal}$ and vice versa, it must be a false positive. \\
 To show this, we first consider what sort of emp\_no these sets potentially can contain. Lets consider site employee. We check all emp\_no returned from the query
 \begin{verbatim}
