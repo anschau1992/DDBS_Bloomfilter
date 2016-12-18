@@ -52,6 +52,7 @@ between k the number of hash functions, m the size of the bloom filter and n the
 \end{equation}
 Let us consider a master $site_m$ which wants to join data from two other sites, $site_1$ and $site_2$. Now instead of performing a bloom filter based join with both sites to get the data, the master site can demand the bloom filter from both sites, build the intersection bloom filter and send it back, so that both sites use the composed bloom filter to find join matches. The main focus of our project is this composed bloom filter. Since in the distributed setting the number of data points needed in the composed bloom filter is not available when $site_1$ and $site_2$ are building the bloom filters based on their data, it is not clear how $site_1$ and $site_2$ should choose the number of hash functions and the size of the bloom filter to minimize the communication cost. Michael (2007) provides theory to pre-compute error probabilities for composed bloom filters. For the intersection of two bloom filters, as we have established above, a bit at some index is set to 1 if and only if at the same index both bloom filters is set to 1. If we assume the distribution of our data points to be independent, Michael (2007) suggests that we can combine the probabilities as follows
 \begin{equation}
+\label{set_to_1_theory}
 \begin{split}
 	P[bf_c[i] \text{ is set to 1}] &= P[bf_1[i] \text{ is set to 1} \wedge bf_2[i] \text{ is set to 1}]\\
 	&= P[bf_1[i] \text{ is set to 1}] * P[bf_2[i] \text{ is set to 1}]
@@ -62,11 +63,16 @@ and the probability of a single bloom filter to set 1 at a index is
 \label{set_to_1}
 P[bf[i] \text{ is set to 1}] = 1-(1-\frac{1}{m})^{k*n}
 \end{equation}
-This leads to the probability of a false-positive in the composed bloom filter
+Inserted in equation \ref{set_to_1_theory} we get
+\begin{equation}
+\label{set_to_1_composed}
+P[bf_c[i] \text{ is set to 1}] = (1-(1-\frac{1}{m})^{k*n_1}) * (1-(1-\frac{1}{m})^{k*n_2})
+\end{equation}
+and this leads to the probability of a false-positive in the composed bloom filter
 \begin{equation}
 \label{false_positive}
 \begin{split}
-P[\text{false-positive in }bf_c] &= (P[bf_1[i] \text{ is set to 1}] * P[bf_2[i] \text{ is set to 1}])^k\\
+P[\text{false-positive in }bf_c] &= (P[bf_c[i] \text{ is set to 1}])^k\\
 &= [(1-(1-\frac{1}{m})^{k*n_1}) * (1-(1-\frac{1}{m})^{k*n_2})]^k
 \end{split}
 \end{equation}\\\\
@@ -124,8 +130,24 @@ Now, we assume there exists a emp\_no which is in $S_{emp}$ and in $S_{sal}$ and
 
 \section{Evaluation}
 We ran our program with multiple inputs to see whether the expected values correlate with the data from our experiment. The data depends on the number of data points we insert in site employee ($n_{emp}$) and site salary ($n_{sal}$), the size of the bloom filter denoted as m and the number of hash functions denoted as k. As we kept the queries consistent, $n_{emp} \text{ and } n_{sal}$ stayed constant and we experimented with m and k. The queries we used returned $n_{emp} = 253$ and $n_{sal} = 17416$. To get reasonable expected values for the number of ones in a bloom filter, we chose m from 1'000 to 101'000 in steps of 2'000 and k from 1 to 31 in steps of 10.
-In this section, we present our findings based on TWOTHREE figures. You can find all of our comparison graphs in the appendix.\\
-In figure \ref{eval1}
+In this section, we present our findings based on three figures. You can find all of our comparison graphs in the appendix.
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[scale=0.4]{res/1-emp.png}
+	\end{center}
+	\caption{Number of ones set in bloom filter from site employees - expected and measure in experiment with k = 1.}
+	\label{fig:eval1}
+\end{figure}\\
+In figure \ref{fig:eval1}, we can clearly see that the number of ones in the bloom filter from the site employee in step 1 in our experiment behaves as we expected in equation \ref{set_to_1}. Figure \ref{fig:eval1} only verifies our expectation when using only one hash function (k=1), but we can see this verification for all expectations about the number of ones in a non-composed bloom filter.
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[scale=0.4]{res/1-composed.png}
+	\end{center}
+	\caption{Number of ones set in bloom filter from site employees - expected and measure in experiment with k = 1.}
+	\label{fig:eval2}
+\end{figure}
+Same is true for the our expectation for the number of ones in the composed bloom filter. Figure \ref{fig:eval2} shows, again with k=1, that our expectation in equation \ref{set_to_1_composed} is also correct.
+
 
 \section{Conclusion}
 
