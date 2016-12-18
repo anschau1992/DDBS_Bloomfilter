@@ -1,0 +1,11 @@
+\begin{thebibliography}{1}
+
+\bibitem{michael}
+L.~Michael, W.~Nejdl, O.~Papapetrou, and W.~Siberski.
+\newblock Improving distributed join efficiency with extended bloom filter
+  operations.
+\newblock In {\em 21st International Conference on Advanced Information
+  Networking and Applications {(AINA} 2007), May 21-23, 2007, Niagara Falls,
+  Canada}, pages 187--194, 2007.
+
+\end{thebibliography}
