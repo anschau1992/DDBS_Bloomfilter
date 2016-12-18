@@ -1,8 +1,0 @@
-DDBS_Bloomfilter.iws
-.*
-report/*.pdf
-report/*.gz
-report/*.aux
-report/*.blg
-report/*.log
-report/*.bbl
