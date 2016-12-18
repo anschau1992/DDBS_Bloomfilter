@@ -12,6 +12,7 @@
 
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{cite}
 
 \begin{document}
 
@@ -33,7 +34,7 @@
 
 	
 \section{Introduction}
-The basis for this project is a paper that gives extensions of bloom filters from basic two-sites database joins to settings with multiple sites (Michael 2007). Generally, in a distributed database setting bloom filters can be used to reduce the communication costs. Bloom filters can represent a dataset in a compressed way by hashing the data into a bit array, which we call the bloom filter. The result of hashing a data point gives the index or indices in the bit array which corresponds to this data point. This leads to two important properties of bloom filters. First, bloom filters can not be used to send data from one site to another. It rather represents a set of data points such that at a different site one can verify whether a given data point is included in the bloom filter or not. Secondly, when used for verifying whether a given data point is in a bloom filter, the bloom filter can actually give a false positive. Meaning, it claims that this data point is included in the set while it actually is not. As a result, it is not always advisable to use bloom filters. Michael (2007) shows us that there are three variables which contribute to the probability that a bloom filter return a false positive. First, the amount of data to be represented matters as well as the size or length of the bloom filter and the number of hash functions used. The paper already suggests an optimal relation between those variables for a simple bloom filter join between two sites and it goes on an shows how the bloom filters can be combined when there are multiple sites such that one can reduce communication cost even further. This leads us to our project where we set up an experiment to verify some claims made in Michael (2007).
+The basis for this project is a paper that gives extensions of bloom filters from basic two-sites database joins to settings with multiple sites (Michael 2007). Generally, in a distributed database setting bloom filters can be used to reduce the communication costs. Bloom filters can represent a dataset in a compressed way by hashing the data into a bit array, which we call the bloom filter. The result of hashing a data point gives the index or indices in the bit array which corresponds to this data point. This leads to two important properties of bloom filters. First, bloom filters can not be used to send data from one site to another. It rather represents a set of data points such that at a different site one can verify whether a given data point is included in the bloom filter or not. Secondly, when used for verifying whether a given data point is in a bloom filter, the bloom filter can actually give a false positive. Meaning, it claims that this data point is included in the set while it actually is not. As a result, it is not always advisable to use bloom filters. Michael (2007) shows us that there are three variables which contribute to the probability that a bloom filter return a false positive. First, the amount of data to be represented matters as well as the size or length of the bloom filter and the number of hash functions used. The paper already suggests an optimal relation between those variables for a simple bloom filter join between two sites and it goes on an shows how the bloom filters can be combined when there are multiple sites such that one can reduce communication cost even further. This leads us to our project where we set up an experiment to verify some claims made in Michael {\em et al}\cite{michael}.
 
 \section{Problem Description}
 A join in a distributed database setting can lead to a lot of communication between the different sites. To reduce the communication cost, one can use bloom filters instead of sending the data points plainly. But since bloom filters do not contain data points but only a representation of them and can return false positives, it is not obvious that a join with bloom filters will perform better.\\\\
@@ -75,7 +76,7 @@ We then developed a tool, which we will present in detail in the Implementation 
  Data independency?
 
 \section{Experiment Set Up}
-We use open source data from https://github.com/datacharmer/test\_db. This is a relational dataset. Created to test applications such as ours. We only use the table employees and salaries for our experiment.
+We used a open source auto-generated dataset from GitHub\footnote{https://github.com/datacharmer/test\_db}. This is a relational dataset. Created to test applications such as ours. We only use the table employees and salaries for our experiment.
 \begin{itemize}
 	\item employees (emp\_no, birth\_date, first\_name, last\_name, gender, hire\_date)
 	\item salaries (emp\_no, salary, from\_date, to\_date)
@@ -114,5 +115,6 @@ Now, we assume there exists a emp\_no which is in $S_{emp}$ and in $S_{sal}$ and
 
 \section{Conclusion}
 
-
+\bibliography{refs}
+\bibliographystyle{abbrv}
 \end{document}
