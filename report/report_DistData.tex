@@ -85,25 +85,26 @@ We then developed a tool, which we will present in detail in the Implementation 
  Data independency?
 
 \section{Experiment Set Up}
-We used a open source auto-generated dataset from GitHub\footnote{https://github.com/datacharmer/test\_db}. This is a relational dataset, with auto-generated fake data, which perfectly fits our needs for the experiment set-up. The following list shows two tables, on which we execute our experiment: 
+We used a open source auto-generated dataset from GitHub\footnote{https://github.com/datacharmer/test\_db}. This is a relational dataset, with auto-generated fake data. In order to execute proper experiments with these databases, we modified the salary-table, so every emp_no is distinct (which is also the case in table employees). We did this because of two reasons. Firstly, to avoid problems with non-unique data represented in our Bloomfilter. As we hash over the emp_no within our Bloomfilter, the number of false positives raises unintentional, when not having unique values on both sides. Second, our implementation of evaluating the false positives demands unique keys on each site in order to count them correctly. The method used is discussed more in detail in Section ADDSECTIONREFERENCE The following list shows two tables, on which we execute our experiment: 
 \begin{itemize}
 	\item employees (\uline{emp\_no}, birth\_date, first\_name, last\_name, gender, hire\_date)
 	\item salaries (\uline{emp\_no}, salary, from\_date, to\_date)
 \end{itemize}
 
-\begin{figure}[ht]
+
+
+\begin{figure}[H]
 	\begin{center}
 		\includegraphics[scale=0.1]{res/architecture.png}
 	\end{center}
 	\caption{The architectural set-up of the experiment}
 	\label{fig:architecture}
 \end{figure}
-
 Figure \ref{fig:architecture} shows an overview of our architectural set-up of the experiment. For our experiment we set the following SQL-queries, which were used on their corresponding tables within the databases:
 
 \begin{itemize}
 	\item[]  \textbf{S1}: \begin{verb}
-	SELECT emp_no FROM employees WHERE first_name = 'Georgi'
+		SELECT emp_no FROM employees WHERE first_name = 'Georgi'
 	\end{verb}
 	\item[]  \textbf{S2}: \begin{verb}
 		SELECT emp_no FROM salaries WHERE salary > 80000.
@@ -111,12 +112,14 @@ Figure \ref{fig:architecture} shows an overview of our architectural set-up of t
 \end{itemize}
 
 
-
 The main steps of our concept are the following:
 \begin{enumerate}
-	\item The master site requests a Bitset from site employee and site salaries. These Bitset are a representation of all entries fulfilling our defined SQL-Query.
-	\item 
-\end{enumerate}
+	\item The master site receives a Bitset from site employee and site salaries. These Bitset are a representation of a projection of all entries fulfilling the query \textbf{S1} on the employee side and \textbf{S2} on the salary side. Each BitSet is generated locally on each site with a identical Bloomfilter.
+	\item An intersection between the two received Bitset is performed on the master site.
+	\item The intersected Bitset is sent from the master to the two sides. it is used to check entries of the projection of 1 are in the intersected. This checking is done with the Bloomfilter.
+	\item Entries matching the intersected Bitset will be send to the master side
+	\item A actual join-process over employee.emp\_no = salary.emp\_no. is performed and the number of false-positives is evaluated.
+	\end{enumerate}
 
 
 
