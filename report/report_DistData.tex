@@ -32,6 +32,9 @@
 	{\large \today\par}
 \end{titlepage}
 
+\tableofcontents
+\listoffigures
+\listoftables
 	
 \section{Introduction}
 The basis for this project is a paper from Michael {\em et al}\cite{michael} that gives extensions of bloom filters from basic two-sites database joins to settings with multiple sites. Generally, in a distributed database setting bloom filters can be used to reduce the communication costs. Bloom filters can represent a dataset in a compressed way by hashing the data into a bit array, which we call the bloom filter. The result of hashing a data point gives the index or indices in the bit array which corresponds to this data point. This leads to two important properties of bloom filters. First, bloom filters can not be used to send data from one site to another. It rather represents a set of data points such that at a different site one can verify whether a given data point is included in the bloom filter or not. Secondly, when used for verifying whether a given data point is in a bloom filter, the bloom filter can actually give a false positive. Meaning, it claims that this data point is included in the set while it actually is not. As a result, it is not always advisable to use bloom filters. Michael (2007) shows us that there are three variables which contribute to the probability that a bloom filter return a false positive. First, the amount of data to be represented matters as well as the size or length of the bloom filter and the number of hash functions used. The paper already suggests an optimal relation between those variables for a simple bloom filter join between two sites and it goes on an shows how the bloom filters can be combined when there are multiple sites such that one can reduce communication cost even further. This leads us to our project where we set up an experiment to verify some claims made in Michael {\em et al}\cite{michael}.
@@ -81,7 +84,6 @@ We used a open source auto-generated dataset from GitHub\footnote{https://github
 	\item employees (\uline{emp\_no}, birth\_date, first\_name, last\_name, gender, hire\_date)
 	\item salaries (\uline{emp\_no}, salary, from\_date, to\_date)
 \end{itemize}
-\vspace{1cm}
 
 \begin{figure}[ht]
 	\begin{center}
@@ -91,7 +93,26 @@ We used a open source auto-generated dataset from GitHub\footnote{https://github
 	\label{fig:architecture}
 \end{figure}
 
+Figure \ref{fig:architecture} shows an overview of our architectural set-up of the experiment. For our experiment we set the following SQL-queries, which were used on their corresponding tables within the databases:
 
+\begin{itemize}
+	\item  \textbf{S1}: \begin{verb}
+	SELECT emp_no FROM employees WHERE first_name = 'Georgi'
+	\end{verb}
+\end{itemize}
+\begin{itemize}
+	\item  \textbf{S2}: \begin{verb}
+		SELECT emp_no FROM salaries WHERE salary > 80000.
+	\end{verb}
+\end{itemize}
+
+
+
+The main steps of our concept are the following:
+\begin{enumerate}
+	\item The master site requests a Bitset from site employee and site salaries. These Bitset are a representation of all entries fulfilling our defined SQL-Query.
+	\item 
+\end{enumerate}
 
 
 
