@@ -34,13 +34,13 @@
 
 \tableofcontents
 \listoffigures
-\listoftables
+\newpage
 	
 \section{Introduction}
-The basis for this project is a paper from Michael {\em et al}\cite{michael} that gives extensions of bloom filters from basic two-sites database joins to settings with multiple sites. Generally, in a distributed database setting bloom filters can be used to reduce the communication costs. Bloom filters can represent a dataset in a compressed way by hashing the data into a bit array, which we call the bloom filter. The result of hashing a data point gives the index or indices in the bit array which corresponds to this data point. This leads to two important properties of bloom filters. First, bloom filters can not be used to send data from one site to another. It rather represents a set of data points such that at a different site one can verify whether a given data point is included in the bloom filter or not. Secondly, when used for verifying whether a given data point is in a bloom filter, the bloom filter can actually give a false positive. Meaning, it claims that this data point is included in the set while it actually is not. As a result, it is not always advisable to use bloom filters. Michael {\em et al}\cite{michael} shows us that there are three variables which contribute to the probability that a bloom filter return a false positive. First, the amount of data to be represented matters as well as the size or length of the bloom filter and the number of hash functions used. The paper already suggests an optimal relation between those variables for a simple bloom filter join between two sites and it goes on and shows how the bloom filters can be combined when there are multiple sites such that one can reduce communication cost even further. This leads us to our project where we set up an experiment to verify some claims made in Michael {\em et al}\cite{michael}.
+ Generally, in a distributed database setting bloom filters can be used to reduce the communication costs. Michael {\em et al}\cite{michael} gives extensions of bloom filters from basic two-sites database joins to settings with multiple sites. Bloom filters can represent a dataset in a compressed way by hashing the data into a bit array, which we call the bloom filter. The result of hashing a data point gives the index or indices in the bit array which corresponds to this data point. This leads to two important properties of bloom filters. First, bloom filters can not be used to send data from one site to another. It rather represents a set of data points such that at a different site one can verify whether a given data point is included in the bloom filter or not. Secondly, when used for verifying whether a given data point is in a bloom filter, the bloom filter can actually give a false positive. Meaning, it claims that this data point is included in the set while it actually is not. As a result, it is not always advisable to use bloom filters. Michael {\em et al}\cite{michael} shows that there are three variables which contribute to the probability that a bloom filter return a false positive. First, the amount of data to be represented matters as well as the size or length of the bloom filter and the number of hash functions used. The paper already suggests an optimal relation between those variables for a simple bloom filter join between two sites and it goes on and shows how the bloom filters can be combined when there are multiple sites such that one can reduce communication cost even further. This leads us to our project where we set up an experiment to verify some claims made in Michael {\em et al}\cite{michael}.
 
 \section{Problem Description}
-A join in a distributed database setting can lead to a lot of communication between the different sites. To reduce the communication cost, one can use bloom filters instead of sending the data points plainly. But since bloom filters do not contain data points but only a representation of them and can return false positives, it is not obvious that a join with bloom filters will perform better.\\\\
+A join in a distributed database setting can lead to a lot of communication between the different sites. To reduce the communication cost, one can use bloom filters instead of sending the data points plainly. Because bloom filters do not contain data points, but only a representation of them and can return false positives, it is not certain that a join with bloom filters will perform better.\\\\
 Michael {\em et al}\cite{michael} provides an optimal relation between the number of hash functions, the size of the bloom filter and the number of data points for a bloom filter based join over two sites. A join over two sites only requires one bloom filter. If we now consider a setting in which we want to join over data points distributed over more than 2 sites, Michael {\em et al}\cite{michael} suggests building composed bloom filters. In our project we only consider the intersection\footnote{Micheal {\em et al}\cite{michael} also covers the union of two bloom filter.} of two bloom filters. First of, to be able to intersect two bloom filters, they must be constructed the same way. In other words, they have to have the same length and use identical hash functions.\\ Then, to build a composed bloom filter $bf_c$ representing the intersection of two bloom filter  $bf_1$ and $bf_2$ we set a index i in $bf_c$ as follows
 \begin{equation}
 	bf_c[i] = 
@@ -74,18 +74,19 @@ and this leads to the probability of a false-positive in the composed bloom filt
 P[\text{false-positive in }bf_c] &= (P[bf_c[i] \text{ is set to 1}])^k\\
 &= [(1-(1-\frac{1}{m})^{k*n_1}) * (1-(1-\frac{1}{m})^{k*n_2})]^k
 \end{split}
-\end{equation}\\\\
-We then developed a tool, which we will present in detail in the following sections, that allows us to build an intersection of two bloom filters containing real data and measure how many ones are set in each of the bloom filters as well as how many false positives the composed bloom filter produces when used to perform a join. We are able to input the bloom filter size and the number of hash functions as arguments in the program. This allows us to experiment with those two variables and collect data for different inputs on how many ones each bloom filter has set as well as the number of false positives. We will compare the collected data to the expected number of ones set and false positives according to equation \ref{set_to_1}, \ref{set_to_1_composed} and \ref{false_positive}. We expect the that the data we collect and the expected values correlate with each other.
-
+\end{equation}\\
+We developed a tool, which allows us to build an intersection of two bloom filters containing real data and measure how many ones are set in each of the bloom filters as well as how many false positives the composed bloom filter produces when used to perform a join. We are able to input the bloom filter size and the number of hash functions as arguments in the program. This allows us to experiment with those two variables and collect data for different inputs on how many ones each bloom filter has set as well as the number of false positives. We will compare the collected data to the expected number of ones set and false positives according to equation \ref{set_to_1}, \ref{set_to_1_composed} and \ref{false_positive}. We expect the that the data we collect and the expected values correlate with each other.
 \section{Experiment Set Up}
+
+
 \subsection{Data}
-We used a open source auto-generated dataset from GitHub\footnote{https://github.com/datacharmer/test\_db}. This is a relational dataset, with auto-generated fake data. In order to execute proper experiments with these databases, we modified the salary-table, so every emp\_no is distinct (which is also the case in table employees). We did this because of two reasons. Firstly, to avoid problems with non-unique data represented in our bloom filter. As we verify non-unique emp\_no with our bloom filter, the number of false positives raises unintentional, when not having unique values on both sides. Second, our implementation of evaluating the false positives demands unique keys on each site in order to count them correctly. The method used is discussed more in detail in Section \ref{sec:falsepositives}. The following list shows two tables, on which we execute our experiment:
+A open source dataset from GitHub\footnote{https://github.com/datacharmer/test\_db} is our basis data source for the project. It is a relational dataset, with auto-generated fake data of fictional employees. In order to execute proper experiments with these databases, we modified the salary-table, so every emp\_no within the table is distinct (which is also the case in table employees). We did this because of two reasons. Firstly, to avoid problems with non-unique data represented in our bloom filter. As we verify non-unique emp\_no with our bloom filter, the number of false positives raises unintentional, when not having unique values on both sides. Second, our implementation of evaluating the false positives demands unique keys on each site in order to count them correctly. The method used is discussed more in detail in Section \ref{sec:falsepositives}. The following list shows two tables, on which we execute our experiment:
 \begin{itemize}
 	\item employees (\uline{emp\_no}, birth\_date, first\_name, last\_name, gender, hire\_date)
 	\item salaries (\uline{emp\_no}, salary, from\_date, to\_date)
 \end{itemize}
 
-\subsection{Set Up}
+\subsection{Set Up} \label{sec:setup}
 
 \begin{figure}[H]
 	\begin{center}
@@ -94,7 +95,7 @@ We used a open source auto-generated dataset from GitHub\footnote{https://github
 	\caption{The architectural set-up of the experiment}
 	\label{fig:architecture}
 \end{figure}
-Figure \ref{fig:architecture} shows an overview of our architectural set-up of the experiment. For our experiment we set the following SQL-queries, which were used on their corresponding tables within the databases:
+Figure \ref{fig:architecture} shows an overview of our architectural set-up of the experiment. For our experiment we set the following SQL-queries, which were used on their corresponding tables within the databases. A join over these two queries returns twelve matches:
 
 \begin{itemize}
 	\item[]  \textbf{S1}: \begin{verb}
@@ -106,7 +107,7 @@ Figure \ref{fig:architecture} shows an overview of our architectural set-up of t
 \end{itemize}
 
 
-The main steps of our concept are the following:
+The main steps of our tool are the following:
 \begin{enumerate}
 	\item The master site receives a Bitset from site employee and site salaries. These Bitset are a representation of a projection of all entries fulfilling the query \textbf{S1} on the employee side and \textbf{S2} on the salary side. Each BitSet is generated locally on each site with a identical bloom filter.
 	\item An intersection between the two received Bitset is performed on the master site.
@@ -117,7 +118,7 @@ The main steps of our concept are the following:
 
 \subsection{Hash Funcitons}
 
-One key aspect of any bloom filter implementation are the hash functions. They need to be independent and distribute uniformly. Both, equation \ref{set_to_1} and \ref{false_positive}, are only true for such hash functions. We decided to implement a universal class of hash functions. This allows us to define the number of hash functions to be used at the start and then we can choose those functions from our class. We used the same method as seen in Cormen{\em et al}\cite{cormen} (p. 267), on designing a universal class of hash functions. As in the book described we chose a prime number p such that every key is smaller than p. Since we need to hash emp\_no in the bloom filter and the biggest emp\_no is smaller than 500'000, we chose $p = 500009$. We define two sets $\mathbb{Z}_p$ and $\mathbb{Z}_p^*$. $\mathbb{Z}_p$ denotes the set $\{0,1,...,p-1\}$ and $\mathbb{Z}_p^*$ denotes $\{1,2,...,p-1\}$. Then we can define a hash function with $a \in \mathbb{Z}_p^* \text{ and } b \in \mathbb{Z}_p$
+One key aspect of any bloom filter implementation are the hash functions. They need to be independent and distribute uniformly. Both, equation \ref{set_to_1} and \ref{false_positive}, are only true for such hash functions. We decided to implement a universal class of hash functions. This allows us to define the number of hash functions to be used at the start and then we can choose those functions from our class. We used the same method as seen in Cormen {\em et al}\cite{cormen} (p. 267), on designing a universal class of hash functions. As in the book described we chose a prime number p such that every key is smaller than p. Since we need to hash emp\_no in the bloom filter and the biggest emp\_no is smaller than 500'000, the next prime number fitting our needs is $p = 500009$. We define two sets $\mathbb{Z}_p$ and $\mathbb{Z}_p^*$. $\mathbb{Z}_p$ denotes the set $\{0,1,...,p-1\}$ and $\mathbb{Z}_p^*$ denotes $\{1,2,...,p-1\}$. Then we can define a hash function with $a \in \mathbb{Z}_p^* \text{ and } b \in \mathbb{Z}_p$
 \begin{equation}
 	h_{ab}(k) = ((ak + b) \mathrel{mod} p) \mathrel{mod} m.
 \end{equation}
@@ -125,23 +126,16 @@ In our case, $p = 500009$ and m is the size of the bloom filter. This is one has
 \begin{equation}
 \mathbb{H}_{pm} = \{h_{ab} \mathrel{:} a \in \mathbb{Z}_p^* \text{ and } b \in \mathbb{Z}_p\}.
 \end{equation}
-This means, for every hash function we simply choose a and b randomly from their sets to create $h_{ab}$. We can use the proofs in the book to verify that this family of hash functions performs well.
+This means, for every hash function we simply choose a and b randomly from their sets to create $h_{ab}$. Cormen {\em et al}\cite{cormen} provide proofs that this family of hash functions performs well.
 
 \section{Implementation}
 
 \subsection{Communication between sides}
-For a stable communication between the three sides we used the Java Remote Method Invocation (Java RMI). Every interaction is initialized by the master side.
-The hash-functions are randomly generated locally on the master side and sent to the two remote sides, where every side creates the identical bloomfilter out of the hash-functions received. For minimal communication costs we use the BitSet class from the Java API to implement the bloomfilter. 
+For a stable communication between the three sides we used the Java Remote Method Invocation (Java RMI)\footnote{http://www.javacoffeebreak.com/articles/javarmi/javarmi.html}. Every interaction is initialized by the master side.
+The hash-functions are randomly generated locally on the master side and sent to the two remote sides, where every side creates the identical bloomfilter out of the hash-functions received. For minimal communication costs we use the BitSet class from the Java API\footnote{https://docs.oracle.com/javase/7/docs/api/java/util/BitSet.html} to implement the bloomfilter. 
 \subsection{Counting False Positive} \label{sec:falsepositives}
 When we perform the join as seen in figure \ref{fig:architecture}, in step 4 both sites return the join-matching tuples. Lets define these results as two sets $S_{emp}$ from site employee and $S_{sal}$ from site salary. We claim that if the emp\_no of a tuple in $S_{emp}$ is also in $S_{sal}$, then it cannot be a false positive. In other words, whenever a tuple in $S_{emp}$ has a emp\_no that does not exist in $S_{sal}$ and vice versa, it must be a false positive. \\
-To show this, we first consider what sort of emp\_no these sets potentially can contain. Lets consider site employee. We check all emp\_no returned from the query
-\begin{verbatim}
-SELECT emp_no FROM employees WHERE first_name = 'Georgi'
-\end{verbatim}
-against the composed bloom filter. Hence, all tuples in $S_{emp}$, true matches and false positives, have a emp\_no from a employee with $first_name = Georgi$. Same is true for $S_{sal}$ just with emp\_no from this query 
-\begin{verbatim}
-SELECT emp_no FROM salaries WHERE salary > 80000.
-\end{verbatim}
+To show this, we first consider what sort of emp\_no these sets potentially can contain. Lets consider site employee. We check all emp\_no returned from the query \textbf{S1} defined in Section \ref{sec:setup} against the composed bloom filter. Hence, all tuples in $S_{emp}$, true matches and false positives, have a emp\_no from a employee with $first_name = Georgi$. Same is true for $S_{sal}$ just with emp\_no from the query \textbf{S2} defined in Section \ref{sec:setup} as well.\\\\
 Now, we assume there exists a emp\_no which is in $S_{emp}$ and in $S_{sal}$ and \emph{is} a false positive. By construction a emp\_no in $S_{emp}$ is from a tuple with $first\_name = Georgi$ and a emp\_no from $S_{sal}$ is form a tuple with $salary > 80'000$. Hence, a emp\_no which is in $S_{emp}$ and in $S_{sal}$ corresponds to a employee with $first\_name = Georgi$ and $salary > 80'000$. This is a true join match and therefore cannot be a false positive.
 
 
