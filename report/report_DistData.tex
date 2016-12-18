@@ -177,6 +177,124 @@ As we can see in Figure \ref{fig:eval3}, our measured false positive are always 
 \section{Conclusion}
 We can conclude that in our set up and implementation the equations \ref{set_to_1} and \ref{set_to_1_composed} given from Michael {\em et al}\cite{michael} are exact predictions of the number of ones set in a simple- or composed bloom filter. We measured the number of false positives a composed bloom filter returns slightly higher than expected. To be able to give the exact reason or reasons for that, requires some more testing that can be done in the next step. Nevertheless, our collected data behaves similar to the prediction, so the equation \ref{false_positive} still gives an reliable prediction of the number of false positives a composed bloom filter returns.
 
+
 \bibliography{refs}
 \bibliographystyle{abbrv}
+
+\appendix
+
+\section{Appendix: Experiment Results}
+\begin{figure}[H]
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/1-emp.png}
+		\end{center}
+		\caption{Results for k=1 and Bloom Filter from employee site.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/1-sal.png}
+		\end{center}
+		\caption{Results for k=1 and Bloom Filter from salary site.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/1-composed.png}
+		\end{center}
+		\caption{Results for k=1 and composed Bloom Filter.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/1-fp.png}
+		\end{center}
+		\caption{Results for k=1 and number of False Positive.}
+	\end{subfigure}
+	\caption{Results from k=1.}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/11-emp.png}
+		\end{center}
+		\caption{Results for k=11 and Bloom Filter from employee site.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/11-sal.png}
+		\end{center}
+		\caption{Results for k=11 and Bloom Filter from salary site.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/11-composed.png}
+		\end{center}
+		\caption{Results for k=11 and composed Bloom Filter.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/11-fp.png}
+		\end{center}
+		\caption{Results for k=11 and number of False Positive.}
+	\end{subfigure}
+	\caption{Results from k=11.}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/21-emp.png}
+		\end{center}
+		\caption{Results for k=21 and Bloom Filter from employee site.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/21-sal.png}
+		\end{center}
+		\caption{Results for k=21 and Bloom Filter from salary site.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/21-composed.png}
+		\end{center}
+		\caption{Results for k=21 and composed Bloom Filter.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/21-fp.png}
+		\end{center}
+		\caption{Results for k=21 and number of False Positive.}
+	\end{subfigure}
+	\caption{Results from k=21.}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/31-emp.png}
+		\end{center}
+		\caption{Results for k=31 and Bloom Filter from employee site.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/31-sal.png}
+		\end{center}
+		\caption{Results for k=31 and Bloom Filter from salary site.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/31-composed.png}
+		\end{center}
+		\caption{Results for k=31 and composed Bloom Filter.}
+	\end{subfigure}
+	\begin{subfigure}[t]{\textwidth}
+		\begin{center}
+			\includegraphics[scale=0.3]{res/31-fp.png}
+		\end{center}
+		\caption{Results for k=31 and number of False Positive.}
+	\end{subfigure}
+	\caption{Results from k=31.}
+\end{figure}
+
+
 \end{document}
